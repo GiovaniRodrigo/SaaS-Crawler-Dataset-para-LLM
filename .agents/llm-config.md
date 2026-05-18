@@ -52,6 +52,7 @@ composer run test
 - Pages Inertia ficam em `resources/js/Pages`.
 - Componentes reutilizaveis ficam em `resources/js/Components`.
 - Tipos TypeScript ficam em `resources/js/Types` ou `resources/js/types`.
+- Em qualquer implementacao, aplique a skill `.agents/skills/menor-custo-possivel/SKILL.md`: menor escopo funcional, menor risco e menor custo de manutencao que resolva o pedido.
 
 ## Cuidados obrigatorios
 
@@ -69,4 +70,3 @@ composer run test
 - Frontend/tipos/build: `npm run build`.
 - Mudancas de rotas: verificar `routes/web.php`, `routes/api.php`, controllers e pages Inertia relacionadas.
 - Mudancas de dataset: verificar exporters, chunker, documentos, migrations e docs de regras de negocio.
-

@@ -13,6 +13,7 @@ Skills locais:
 - `.agents/skills/laravel-inertia/SKILL.md`
 - `.agents/skills/crawler-dataset/SKILL.md`
 - `.agents/skills/browser-extension/SKILL.md`
+- `.agents/skills/menor-custo-possivel/SKILL.md`
 
 ## Preferencias
 
@@ -21,4 +22,3 @@ Skills locais:
 - Mantenha alteracoes focadas no pedido.
 - Preserve convencoes Laravel/Inertia ja existentes.
 - Antes de criar novos padroes, procure equivalentes em `app/Actions`, `app/Services`, `app/Contracts`, `app/Http/Requests`, `app/Policies` e `resources/js`.
-

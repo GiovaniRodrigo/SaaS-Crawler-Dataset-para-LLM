@@ -13,6 +13,8 @@ Skills locais disponiveis:
 - `.agents/skills/laravel-inertia/SKILL.md`
 - `.agents/skills/crawler-dataset/SKILL.md`
 - `.agents/skills/browser-extension/SKILL.md`
+- `.agents/skills/menor-custo-possivel/SKILL.md`
+- `.agents/skills/datacrawl-frontend-design-system/SKILL.md`
 
 ## Regras de trabalho
 
@@ -24,4 +26,3 @@ Skills locais disponiveis:
 - Ao mexer em backend, rode `composer run test` quando viavel.
 - Ao mexer em frontend, rode `npm run build` quando viavel.
 - Atualize a documentacao quando mudar fluxo, regra de negocio, setup ou arquitetura.
-

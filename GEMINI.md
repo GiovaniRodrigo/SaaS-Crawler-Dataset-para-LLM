@@ -13,6 +13,7 @@ Skills locais:
 - `.agents/skills/laravel-inertia/SKILL.md`
 - `.agents/skills/crawler-dataset/SKILL.md`
 - `.agents/skills/browser-extension/SKILL.md`
+- `.agents/skills/menor-custo-possivel/SKILL.md`
 
 Use as mesmas regras de trabalho de `AGENTS.md`. Quando houver conflito entre arquivos, siga esta ordem:
 
@@ -21,4 +22,3 @@ Use as mesmas regras de trabalho de `AGENTS.md`. Quando houver conflito entre ar
 3. `.agents/llm-config.md`
 4. `.agents/project-context.md`
 5. Documentacao em `docs/`
-
