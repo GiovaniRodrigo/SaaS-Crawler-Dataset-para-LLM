@@ -3,15 +3,24 @@
     "type": "module",
     "scripts": {
         "build": "tsc && vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "test": "vitest run",
+        "test:e2e": "playwright test",
+        "cypress:open": "cypress open",
+        "cypress:run": "cypress run",
+        "test:regression": "./tests/regression.sh"
     },
     "devDependencies": {
         "@headlessui/react": "^2.2.10",
         "@inertiajs/react": "^3.1.1",
+        "@playwright/test": "^1.60.0",
         "@rolldown/plugin-babel": "^0.2.3",
         "@tailwindcss/forms": "^0.5.11",
         "@tailwindcss/postcss": "^4.3.0",
         "@tailwindcss/vite": "^4.3.0",
+        "@testing-library/jest-dom": "^6.9.1",
+        "@testing-library/react": "^16.3.2",
+        "@testing-library/user-event": "^14.6.1",
         "@types/node": "^25.9.0",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
@@ -20,6 +29,8 @@
         "axios": "^1.16.1",
         "babel-plugin-react-compiler": "^1.0.0",
         "concurrently": "^9.2.1",
+        "cypress": "^15.15.0",
+        "jsdom": "^29.1.1",
         "laravel-vite-plugin": "^3.1",
         "postcss": "^8.5.6",
         "react": "^19.2.6",
@@ -27,6 +38,12 @@
         "tailwindcss": "^4.3.0",
         "typescript": "^6.0.3",
         "vite": "^8.0.13",
+        "vitest": "^4.1.6",
         "ziggy-js": "^2.6.2"
+    },
+    "dependencies": {
+        "clsx": "^2.1.1",
+        "lucide-react": "^1.16.0",
+        "tailwind-merge": "^3.6.0"
     }
 }

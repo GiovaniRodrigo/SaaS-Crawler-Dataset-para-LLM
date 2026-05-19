@@ -15,6 +15,8 @@
 
 ## Evolução
 
-- [Status do Projeto](./08_STATUS_DO_PROJETO.md)
-- [Roadmap de Menor Custo](./09_ROADMAP_MENOR_CUSTO.md)
-- [Pendências e Riscos](./10_PENDENCIAS_E_RISCOS.md)
+- [08. Status do Projeto](./08_STATUS_DO_PROJETO.md)
+- [09. Roadmap Menor Custo](./09_ROADMAP_MENOR_CUSTO.md)
+- [10. Pendências e Riscos](./10_PENDENCIAS_E_RISCOS.md)
+- [11. Design Hi-Fi](./11_DESIGN_HI_FI.md)
+

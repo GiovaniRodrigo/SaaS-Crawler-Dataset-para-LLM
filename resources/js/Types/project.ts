@@ -2,6 +2,7 @@ export interface Project {
     id: number;
     name: string;
     description: string | null;
+    is_active?: boolean;
     user_id: number;
     created_at: string;
     updated_at: string;

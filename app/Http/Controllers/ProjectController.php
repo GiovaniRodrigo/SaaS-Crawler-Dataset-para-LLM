@@ -40,7 +40,7 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
-        $this->authorize('view', $project);
+        \Illuminate\Support\Facades\Gate::authorize('view', $project);
 
         return Inertia::render('Projects/Show', [
             'project' => $project->load(['domains', 'crawlJobs']),
@@ -53,7 +53,7 @@ class ProjectController extends Controller
 
     public function edit(Project $project)
     {
-        $this->authorize('update', $project);
+        \Illuminate\Support\Facades\Gate::authorize('update', $project);
 
         return Inertia::render('Projects/Edit', [
             'project' => $project
@@ -62,7 +62,7 @@ class ProjectController extends Controller
 
     public function update(UpdateProjectRequest $request, Project $project, UpdateProjectAction $action)
     {
-        $this->authorize('update', $project);
+        \Illuminate\Support\Facades\Gate::authorize('update', $project);
 
         $action->execute($project, $request->validated());
 
@@ -72,7 +72,7 @@ class ProjectController extends Controller
 
     public function destroy(Project $project, DeleteProjectAction $action)
     {
-        $this->authorize('delete', $project);
+        \Illuminate\Support\Facades\Gate::authorize('delete', $project);
 
         $action->execute($project);
 

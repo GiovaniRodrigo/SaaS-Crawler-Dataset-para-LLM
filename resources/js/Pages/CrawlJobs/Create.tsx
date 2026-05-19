@@ -43,14 +43,15 @@ export default function Create({ project }: Props) {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Novo Job de Crawling - {project.name}
-                </h2>
+                <div>
+                    <p className="text-xs font-semibold uppercase text-cyan-300">{project.name}</p>
+                    <h2 className="mt-1 text-2xl font-bold text-slate-100">Novo job de crawling</h2>
+                </div>
             }
         >
             <Head title="Novo Job" />
 
-            <div className="py-12">
+            <div className="py-10">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <Card>
                         <form onSubmit={submit}>
@@ -70,7 +71,7 @@ export default function Create({ project }: Props) {
                                             <button
                                                 type="button"
                                                 onClick={() => removeUrl(index)}
-                                                className="text-red-600 hover:text-red-900 px-2"
+                                            className="px-2 text-red-300 hover:text-red-200"
                                             >
                                                 &times;
                                             </button>
@@ -80,14 +81,14 @@ export default function Create({ project }: Props) {
                                 <button
                                     type="button"
                                     onClick={addUrl}
-                                    className="mt-2 text-sm text-blue-600 hover:underline"
+                                    className="mt-2 text-sm font-medium text-cyan-300 hover:text-cyan-200"
                                 >
                                     + Adicionar outra URL
                                 </button>
                                 <InputError message={errors.seed_urls} className="mt-2" />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4 mt-6">
+                            <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                                 <div>
                                     <InputLabel htmlFor="max_depth" value="Profundidade Máxima" />
                                     <TextInput
@@ -118,7 +119,7 @@ export default function Create({ project }: Props) {
 
                             <div className="mt-8 flex items-center justify-end">
                                 <PrimaryButton disabled={processing}>
-                                    Criar Job
+                                    Criar job
                                 </PrimaryButton>
                             </div>
                         </form>

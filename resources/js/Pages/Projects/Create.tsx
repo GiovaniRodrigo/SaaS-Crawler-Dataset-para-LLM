@@ -21,14 +21,15 @@ export default function Create() {
     return (
         <AuthenticatedLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Criar Projeto
-                </h2>
+                <div>
+                    <p className="text-xs font-semibold uppercase text-cyan-300">Novo escopo</p>
+                    <h2 className="mt-1 text-2xl font-bold text-slate-100">Criar projeto</h2>
+                </div>
             }
         >
             <Head title="Criar Projeto" />
 
-            <div className="py-12">
+            <div className="py-10">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <Card>
                         <form onSubmit={submit}>
@@ -52,7 +53,7 @@ export default function Create() {
                                     id="description"
                                     name="description"
                                     value={data.description}
-                                    className="mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                    className="mt-1 block w-full rounded-md border-slate-700 bg-slate-950 text-slate-100 shadow-sm placeholder:text-slate-500 focus:border-cyan-400 focus:ring-cyan-400"
                                     rows={4}
                                     onChange={(e) => setData('description', e.target.value)}
                                 />
@@ -60,8 +61,8 @@ export default function Create() {
                             </div>
 
                             <div className="mt-6 flex items-center justify-end">
-                                <PrimaryButton className="ms-4" disabled={processing}>
-                                    Salvar Projeto
+                                <PrimaryButton disabled={processing}>
+                                    Salvar projeto
                                 </PrimaryButton>
                             </div>
                         </form>
