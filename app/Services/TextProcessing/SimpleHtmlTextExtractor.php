@@ -49,9 +49,35 @@ class SimpleHtmlTextExtractor implements HtmlTextExtractorInterface
 
     private function getCleanText($node): string
     {
-        // Simple text extraction by iterating over children or using textContent
-        // We want to keep some structure, maybe newlines for block elements
-        $text = $node->textContent;
+        $text = $this->extractTextWithNewlines($node);
+        // Clean up excessive whitespace but keep single newlines
+        $text = preg_replace('/[ \t]+/', ' ', $text);
+        $text = preg_replace('/\n\s*\n/', "\n\n", $text);
+        return trim($text);
+    }
+
+    private function extractTextWithNewlines($node): string
+    {
+        if ($node->nodeType === XML_TEXT_NODE) {
+            return $node->textContent;
+        }
+
+        $text = "";
+        if ($node->childNodes) {
+            foreach ($node->childNodes as $child) {
+                $text .= $this->extractTextWithNewlines($child);
+            }
+        }
+
+        $blockElements = [
+            'p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 
+            'li', 'br', 'hr', 'article', 'section'
+        ];
+
+        if (in_array(strtolower($node->nodeName), $blockElements)) {
+            $text .= "\n";
+        }
+
         return $text;
     }
 }

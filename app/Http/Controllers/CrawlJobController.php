@@ -27,7 +27,7 @@ class CrawlJobController extends Controller
         $job = $action->execute($project, $request->validated());
 
         return redirect()->route('crawl-jobs.show', $job)
-            ->with('success', 'Job de crawling criado com sucesso.');
+            ->with('success', __('messages.crawl_job_created'));
     }
 
     public function show(CrawlJob $crawlJob)
@@ -44,11 +44,11 @@ class CrawlJobController extends Controller
         $this->authorize('run', $crawlJob);
 
         if ($crawlJob->status === 'running') {
-            return redirect()->back()->with('error', 'Este job já está em execução.');
+            return redirect()->back()->with('error', __('messages.crawl_job_running'));
         }
 
         RunCrawlJob::dispatch($crawlJob);
 
-        return redirect()->back()->with('success', 'Job de crawling iniciado em segundo plano.');
+        return redirect()->back()->with('success', __('messages.crawl_job_started'));
     }
 }

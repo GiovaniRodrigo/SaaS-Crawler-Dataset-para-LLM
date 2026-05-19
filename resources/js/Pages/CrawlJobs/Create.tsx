@@ -6,6 +6,7 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
+import useTranslation from '@/Hooks/useTranslation';
 import { FormEvent } from 'react';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 }
 
 export default function Create({ project }: Props) {
+    const { t } = useTranslation();
     const { data, setData, post, processing, errors } = useForm({
         seed_urls: [''],
         max_depth: 3,
@@ -45,18 +47,18 @@ export default function Create({ project }: Props) {
             header={
                 <div>
                     <p className="text-xs font-semibold uppercase text-cyan-300">{project.name}</p>
-                    <h2 className="mt-1 text-2xl font-bold text-slate-100">Novo job de crawling</h2>
+                    <h2 className="mt-1 text-2xl font-bold text-slate-100">{t('messages.new_crawling_job')}</h2>
                 </div>
             }
         >
-            <Head title="Novo Job" />
+            <Head title={t('messages.new_crawling_job')} />
 
             <div className="py-10">
                 <div className="mx-auto max-w-3xl sm:px-6 lg:px-8">
                     <Card>
                         <form onSubmit={submit}>
                             <div>
-                                <InputLabel value="Seed URLs (URLs iniciais)" />
+                                <InputLabel value={t('messages.seed_urls')} />
                                 {data.seed_urls.map((url, index) => (
                                     <div key={index} className="flex mt-1 gap-2">
                                         <TextInput
@@ -83,14 +85,14 @@ export default function Create({ project }: Props) {
                                     onClick={addUrl}
                                     className="mt-2 text-sm font-medium text-cyan-300 hover:text-cyan-200"
                                 >
-                                    + Adicionar outra URL
+                                    {t('messages.add_another_url')}
                                 </button>
                                 <InputError message={errors.seed_urls} className="mt-2" />
                             </div>
 
                             <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
                                 <div>
-                                    <InputLabel htmlFor="max_depth" value="Profundidade Máxima" />
+                                    <InputLabel htmlFor="max_depth" value={t('messages.max_depth')} />
                                     <TextInput
                                         id="max_depth"
                                         type="number"
@@ -103,7 +105,7 @@ export default function Create({ project }: Props) {
                                     <InputError message={errors.max_depth} className="mt-2" />
                                 </div>
                                 <div>
-                                    <InputLabel htmlFor="max_pages" value="Limite de Páginas" />
+                                    <InputLabel htmlFor="max_pages" value={t('messages.max_pages')} />
                                     <TextInput
                                         id="max_pages"
                                         type="number"
@@ -119,7 +121,7 @@ export default function Create({ project }: Props) {
 
                             <div className="mt-8 flex items-center justify-end">
                                 <PrimaryButton disabled={processing}>
-                                    Criar job
+                                    {t('messages.create_job')}
                                 </PrimaryButton>
                             </div>
                         </form>

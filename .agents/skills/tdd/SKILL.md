@@ -30,6 +30,7 @@ Siga estes passos rigorosamente:
 - Implemente a lógica necessária.
 - Evite refatorações prematuras aqui; o objetivo é o "verde" o mais rápido possível.
 - Execute o teste até passar.
+- **Multilingual por Padrão:** Toda nova string ou interface deve obrigatoriamente utilizar o sistema de tradução (Laravel `lang` no backend e o hook `useTranslation` no frontend). É proibido o uso de strings hardcoded no código.
 - **Console Check:** Verifique se o componente renderiza sem erros ou warnings no console do navegador (ou via `console.spy` em testes unitários).
 
 ### 4. Fase Refactor

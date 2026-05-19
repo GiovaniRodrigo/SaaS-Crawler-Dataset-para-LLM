@@ -15,6 +15,7 @@ class CreateDocumentFromCrawledPageAction
         protected HtmlTextExtractorInterface $extractor,
         protected TextCleanerInterface $cleaner,
         protected ContentHasherInterface $hasher,
+        protected \App\Services\Quality\QualityScorer $qualityScorer,
         protected GenerateChunksForDocumentAction $generateChunksAction
     ) {}
 
@@ -48,6 +49,12 @@ class CreateDocumentFromCrawledPageAction
             'language' => $extracted->language,
             'content_hash' => $hash,
             'source' => $page->source,
+            'status' => Document::STATUS_PENDING,
+        ]);
+
+        // Calculate and update quality score
+        $document->update([
+            'quality_score' => $this->qualityScorer->calculate($document)
         ]);
 
         // Generate chunks

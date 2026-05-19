@@ -102,6 +102,7 @@ Regra importante no projeto de referencia: **usar `app/globals.css` como fonte p
 | Evitar redesenho sem necessidade | Nao trocar paleta, fontes, espacamentos ou linguagem visual sem solicitacao explicita |
 | Reaproveitar componentes | Usar `components/ui` antes de criar novos componentes no projeto de referencia; neste repo, usar componentes existentes em `resources/js/Components` |
 | Usar composicao | Criar telas a partir de Card, Button, Badge, Input, Tabs, Table, Dialog, Sheet e Sidebar quando existirem |
+| Navegacao Acessivel | Toda nova tela implementada deve possuir um botao ou link de redirecionamento correspondente em uma tela pai ou menu relevante (ex: Sidebar, Dashboard ou cabecalho) |
 | Evitar CSS duplicado | Preferir tokens CSS e utilitarios existentes |
 | Baixo custo | Implementar primeiro telas estaticas e dados mockados, depois integrar com backend |
 | Responsividade | Usar grids responsivos com `grid-cols-1`, `md:grid-cols-*`, `lg:grid-cols-*` |
@@ -408,6 +409,7 @@ A LLM deve usar nomes alinhados ao dominio:
 | Acao principal da tela | Usar botao `default` com icone |
 | Acao secundaria | Usar `secondary` ou `outline` |
 | Acao destrutiva | Usar `destructive` e confirmar com dialog |
+| Navegacao de tela | Sempre adicionar um botao ou link de redirecionamento na tela pai ou menu relevante para qualquer nova tela implementada |
 | Card clicavel | Aplicar `card-hover` |
 | Item em processamento | Usar badge warning e `status-pulse` quando fizer sentido |
 | Conteudo vazio | Usar componente `Empty` ou card com mensagem clara |

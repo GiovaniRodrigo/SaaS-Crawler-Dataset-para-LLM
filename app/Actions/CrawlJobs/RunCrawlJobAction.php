@@ -91,7 +91,7 @@ class RunCrawlJobAction
 
             $this->markAsCompletedAction->execute($job);
         } catch (\Exception $e) {
-            Log::error("CrawlJob {$job->id} failed: " . $e->getMessage());
+            Log::error(__('messages.crawl_job_failed', ['id' => $job->id]) . " " . $e->getMessage());
             $this->markAsFailedAction->execute($job);
             throw $e;
         }

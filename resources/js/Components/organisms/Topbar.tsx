@@ -1,11 +1,19 @@
-import { usePage } from '@inertiajs/react';
-import { Search, Bell, User, ChevronDown } from 'lucide-react';
+import { usePage, Link } from '@inertiajs/react';
+import { Search, Bell, User, ChevronDown, Languages } from 'lucide-react';
 import Typography from '@/Components/atoms/Typography';
 import Badge from '@/Components/atoms/Badge';
 import Dropdown from '@/Components/Dropdown';
 
 export default function Topbar() {
-    const user = usePage().props.auth.user;
+    const { auth, locale } = usePage<any>().props;
+    const user = auth.user;
+
+    const languages = [
+        { code: 'pt_BR', label: 'Português', flag: '🇧🇷' },
+        { code: 'en', label: 'English', flag: '🇺🇸' },
+    ];
+
+    const currentLanguage = languages.find(l => l.code === locale) || languages[0];
 
     return (
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/80 px-8 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
@@ -17,6 +25,28 @@ export default function Topbar() {
 
             {/* Actions */}
             <div className="flex items-center gap-6">
+                <Dropdown>
+                    <Dropdown.Trigger>
+                        <button className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800">
+                            <span>{currentLanguage.flag}</span>
+                            <span className="hidden sm:inline">{currentLanguage.label}</span>
+                            <ChevronDown className="h-4 w-4" />
+                        </button>
+                    </Dropdown.Trigger>
+                    <Dropdown.Content>
+                        {languages.map((lang) => (
+                            <Dropdown.Link 
+                                key={lang.code} 
+                                href={`?lang=${lang.code}`}
+                                preserveState={false}
+                            >
+                                <span className="mr-2">{lang.flag}</span>
+                                {lang.label}
+                            </Dropdown.Link>
+                        ))}
+                    </Dropdown.Content>
+                </Dropdown>
+
                 <div className="flex items-center gap-2">
                     <Badge variant="indigo" className="px-3">PRO PLAN</Badge>
                     <Typography variant="caption" className="text-[10px] text-slate-400">

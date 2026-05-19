@@ -4,12 +4,14 @@ import { CrawlJob } from '@/Types/project';
 import Card from '@/Components/atoms/Card';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
+import useTranslation from '@/Hooks/useTranslation';
 
 interface Props {
     crawlJob: CrawlJob;
 }
 
 export default function Show({ crawlJob }: Props) {
+    const { t } = useTranslation();
     const { post, processing } = useForm();
 
     const runJob = () => {
@@ -25,7 +27,7 @@ export default function Show({ crawlJob }: Props) {
                         <h2 className="mt-1 text-2xl font-bold text-slate-100">Job #{crawlJob.id}</h2>
                     </div>
                     <Link href={route('projects.show', crawlJob.project_id)}>
-                        <SecondaryButton>Voltar ao projeto</SecondaryButton>
+                        <SecondaryButton>{t('messages.back_to_project')}</SecondaryButton>
                     </Link>
                 </div>
             }
@@ -36,10 +38,10 @@ export default function Show({ crawlJob }: Props) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                         <Card className="md:col-span-2">
-                            <h3 className="mb-4 text-lg font-bold text-slate-100">Configuração</h3>
+                            <h3 className="mb-4 text-lg font-bold text-slate-100">{t('messages.configuration')}</h3>
                             <div className="space-y-4">
                                 <div>
-                                    <span className="font-semibold text-slate-400">Status:</span>
+                                    <span className="font-semibold text-slate-400">{t('messages.status')}:</span>
                                     <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
                                         crawlJob.status === 'completed' ? 'bg-emerald-400/10 text-emerald-300' :
                                         crawlJob.status === 'running' ? 'bg-cyan-400/10 text-cyan-300' :
@@ -49,7 +51,7 @@ export default function Show({ crawlJob }: Props) {
                                     </span>
                                 </div>
                                 <div>
-                                    <span className="font-semibold text-slate-400">Seed URLs:</span>
+                                    <span className="font-semibold text-slate-400">{t('messages.seed_urls')}:</span>
                                     <ul className="list-disc ml-6 mt-1">
                                         {crawlJob.seed_urls.map((url, i) => (
                                             <li key={i} className="truncate text-sm text-slate-200">{url}</li>
@@ -58,11 +60,11 @@ export default function Show({ crawlJob }: Props) {
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <span className="font-semibold text-slate-400">Profundidade máxima:</span>
+                                        <span className="font-semibold text-slate-400">{t('messages.max_depth')}:</span>
                                         <span className="ml-2 text-slate-100">{crawlJob.max_depth}</span>
                                     </div>
                                     <div>
-                                        <span className="font-semibold text-slate-400">Limite de páginas:</span>
+                                        <span className="font-semibold text-slate-400">{t('messages.max_pages')}:</span>
                                         <span className="ml-2 text-slate-100">{crawlJob.max_pages}</span>
                                     </div>
                                 </div>
@@ -71,34 +73,34 @@ export default function Show({ crawlJob }: Props) {
                             {crawlJob.status === 'created' && (
                                 <div className="mt-8">
                                     <PrimaryButton onClick={runJob} disabled={processing}>
-                                        Executar agora
+                                        {t('messages.execute_now')}
                                     </PrimaryButton>
                                 </div>
                             )}
                         </Card>
 
                         <Card>
-                            <h3 className="mb-4 text-lg font-bold text-slate-100">Relatório</h3>
+                            <h3 className="mb-4 text-lg font-bold text-slate-100">{t('messages.report')}</h3>
                             <div className="space-y-4">
                                 <div className="flex justify-between text-slate-300">
-                                    <span>Páginas Descobertas:</span>
+                                    <span>{t('messages.pages_discovered')}:</span>
                                     <span className="font-bold text-slate-100">{crawlJob.total_discovered}</span>
                                 </div>
                                 <div className="flex justify-between text-slate-300">
-                                    <span>Páginas Coletadas:</span>
+                                    <span>{t('messages.pages_crawled')}:</span>
                                     <span className="font-bold text-emerald-300">{crawlJob.total_crawled}</span>
                                 </div>
                                 <div className="flex justify-between text-slate-300">
-                                    <span>Páginas Falhas:</span>
+                                    <span>{t('messages.pages_failed')}:</span>
                                     <span className="font-bold text-red-300">{crawlJob.total_failed}</span>
                                 </div>
                                 <hr className="border-slate-800" />
                                 <div className="flex justify-between text-slate-300">
-                                    <span>Documentos Gerados:</span>
+                                    <span>{t('messages.documents_generated')}:</span>
                                     <span className="font-bold text-slate-100">{crawlJob.total_documents}</span>
                                 </div>
                                 <div className="flex justify-between text-slate-300">
-                                    <span>Chunks Gerados:</span>
+                                    <span>{t('messages.chunks_generated')}:</span>
                                     <span className="font-bold text-slate-100">{crawlJob.total_chunks}</span>
                                 </div>
                             </div>

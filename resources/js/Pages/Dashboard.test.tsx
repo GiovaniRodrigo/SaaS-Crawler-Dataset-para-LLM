@@ -10,6 +10,17 @@ vi.mock('@inertiajs/react', () => ({
         props: {
             auth: {
                 user: { name: 'Test User', email: 'test@example.com' }
+            },
+            translations: {
+                messages: {
+                    dashboard: 'Dashboard',
+                    welcome_back: 'Bem-vindo de volta',
+                    projects: 'Projetos Ativos',
+                    documents: 'Páginas Coletadas',
+                    chunks: 'Chunks Gerados',
+                    new_project: 'Novo Projeto',
+                    new_job: 'Novo Job',
+                }
             }
         },
         url: '/dashboard'
@@ -17,8 +28,15 @@ vi.mock('@inertiajs/react', () => ({
 }));
 
 describe('Dashboard Page', () => {
+    const stats = {
+        total_projects: 8,
+        total_documents: 24300,
+        total_chunks: 91200,
+        average_quality: 87
+    };
+
     it('renders the dashboard with correct user info and metrics', () => {
-        render(<Dashboard />);
+        render(<Dashboard stats={stats} activeJobs={[]} recentActivities={[]} />);
         
         // Check if header is present (specifically the H1)
         const headers = screen.getAllByText('Dashboard');
@@ -26,9 +44,14 @@ describe('Dashboard Page', () => {
         expect(screen.getByText(/Bem-vindo de volta/)).toBeInTheDocument();
         
         // Check if KPI cards are rendered
-        expect(screen.getByText('Projetos Ativos')).toBeInTheDocument();
-        expect(screen.getByText('Páginas Coletadas')).toBeInTheDocument();
-        expect(screen.getByText('Chunks Gerados')).toBeInTheDocument();
+        const projectsElements = screen.getAllByText('Projetos Ativos');
+        expect(projectsElements.length).toBeGreaterThan(0);
+        
+        const pagesElements = screen.getAllByText('Páginas Coletadas');
+        expect(pagesElements.length).toBeGreaterThan(0);
+
+        const chunksElements = screen.getAllByText('Chunks Gerados');
+        expect(chunksElements.length).toBeGreaterThan(0);
         
         // Check if "Ações rápidas" are present
         expect(screen.getByText('Ações rápidas')).toBeInTheDocument();

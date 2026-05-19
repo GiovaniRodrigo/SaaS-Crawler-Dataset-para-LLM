@@ -35,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ContentHasherInterface::class, Sha256ContentHasher::class);
         $this->app->bind(ChunkerInterface::class, SimpleChunker::class);
         $this->app->bind(DatasetExporterInterface::class, JsonlDatasetExporter::class);
+
+        // AI and Search
+        $this->app->bind(\App\Contracts\AI\EmbeddingGeneratorInterface::class, \App\Services\AI\FakeEmbeddingGenerator::class);
+        $this->app->bind(\App\Contracts\Repositories\ChunkEmbeddingRepositoryInterface::class, \App\Repositories\PgVectorChunkEmbeddingRepository::class);
+        $this->app->bind(\App\Contracts\Search\SemanticSearchInterface::class, \App\Services\Search\PgVectorSemanticSearchService::class);
     }
 
     /**
@@ -42,6 +47,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if (app()->environment('production')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

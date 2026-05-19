@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\CrawlJobController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ChunkController;
+use App\Http\Controllers\DocumentReviewController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DatasetExportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +23,14 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/product', [MarketingController::class, 'product'])->name('product');
+Route::get('/features', [MarketingController::class, 'features'])->name('features');
+Route::get('/security', [MarketingController::class, 'security'])->name('security');
+Route::get('/pricing', [MarketingController::class, 'pricing'])->name('pricing');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -46,8 +54,17 @@ Route::middleware('auth')->group(function () {
     Route::get('projects/{project}/documents', [DocumentController::class, 'index'])->name('projects.documents.index');
     Route::get('documents/{document}', [DocumentController::class, 'show'])->name('documents.show');
 
+    // Document Review
+    Route::get('review/{project?}', [DocumentReviewController::class, 'index'])->name('documents.review.index');
+    Route::post('documents/{document}/approve', [DocumentReviewController::class, 'approve'])->name('documents.approve');
+    Route::post('documents/{document}/reject', [DocumentReviewController::class, 'reject'])->name('documents.reject');
+    Route::post('documents/bulk-approve', [DocumentReviewController::class, 'bulkApprove'])->name('documents.bulk-approve');
+
     // Chunks
     Route::get('projects/{project}/chunks', [ChunkController::class, 'index'])->name('projects.chunks.index');
+
+    // Semantic Search
+    Route::post('projects/{project}/semantic-search', \App\Http\Controllers\SemanticSearchController::class)->name('projects.semantic-search');
 
     // Exports
     Route::get('projects/{project}/exports/documents', [DatasetExportController::class, 'documents'])->name('projects.exports.documents');

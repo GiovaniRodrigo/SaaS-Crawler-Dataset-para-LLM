@@ -21,7 +21,7 @@ export default function ApplicationLogo({ className, ...props }: SVGAttributes<S
                 </svg>
             </div>
             <span className="text-xl font-bold tracking-tight text-slate-100 hidden sm:block">
-                Data<span className="text-cyan-400">Crawl</span>
+                Crawl<span className="text-cyan-400">Mind</span>
             </span>
         </div>
     );

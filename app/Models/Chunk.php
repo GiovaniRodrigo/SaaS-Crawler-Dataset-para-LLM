@@ -28,4 +28,9 @@ class Chunk extends Model
     {
         return $this->belongsTo(Document::class);
     }
+
+    public function embedding(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(ChunkEmbedding::class);
+    }
 }

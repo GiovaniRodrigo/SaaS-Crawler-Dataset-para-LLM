@@ -15,6 +15,7 @@ Skills locais disponiveis:
 - `.agents/skills/browser-extension/SKILL.md`
 - `.agents/skills/menor-custo-possivel/SKILL.md`
 - `.agents/skills/datacrawl-frontend-design-system/SKILL.md`
+- `.agents/skills/codebase-specialist/SKILL.md`
 
 ## Regras de trabalho
 

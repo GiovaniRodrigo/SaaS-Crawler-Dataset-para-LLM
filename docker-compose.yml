@@ -1,0 +1,95 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: datacrawl-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./docker/app/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - datacrawl
+    depends_on:
+      - postgres
+      - redis
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/app/Dockerfile
+    container_name: datacrawl-worker
+    restart: unless-stopped
+    working_dir: /var/www
+    command: php artisan queue:work --timeout=3600
+    volumes:
+      - .:/var/www
+      - ./docker/app/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - datacrawl
+    depends_on:
+      - app
+      - redis
+
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: datacrawl-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-datacrawl}
+      POSTGRES_USER: ${DB_USERNAME:-datacrawl}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-datacrawl_secret}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - datacrawl_postgres_data:/var/lib/postgresql/data
+    networks:
+      - datacrawl
+
+  redis:
+    image: redis:alpine
+    container_name: datacrawl-redis
+    restart: unless-stopped
+    networks:
+      - datacrawl
+
+  caddy:
+    image: caddy:2
+    container_name: datacrawl-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - datacrawl
+    depends_on:
+      - app
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: datacrawl-portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - "9000:9000"
+    networks:
+      - datacrawl
+
+volumes:
+  datacrawl_postgres_data:
+  caddy_data:
+  caddy_config:
+  portainer_data:
+
+networks:
+  datacrawl:
+    driver: bridge

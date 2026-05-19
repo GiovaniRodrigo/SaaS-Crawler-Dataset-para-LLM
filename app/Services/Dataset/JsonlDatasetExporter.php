@@ -13,7 +13,7 @@ class JsonlDatasetExporter implements DatasetExporterInterface
         $filename = 'exports/project_' . $project->id . '_documents_' . time() . '.jsonl';
         $handle = fopen('php://temp', 'r+');
 
-        $project->documents()->chunk(100, function ($documents) use ($handle) {
+        $project->documents()->approved()->chunk(100, function ($documents) use ($handle) {
             foreach ($documents as $doc) {
                 $data = [
                     'id' => 'doc_' . $doc->id,
@@ -24,6 +24,7 @@ class JsonlDatasetExporter implements DatasetExporterInterface
                     'text' => $doc->text,
                     'source' => $doc->source,
                     'language' => $doc->language,
+                    'quality_score' => $doc->quality_score,
                     'content_hash' => $doc->content_hash,
                     'created_at' => $doc->created_at->toIso8601String(),
                 ];
@@ -43,7 +44,9 @@ class JsonlDatasetExporter implements DatasetExporterInterface
         $filename = 'exports/project_' . $project->id . '_chunks_' . time() . '.jsonl';
         $handle = fopen('php://temp', 'r+');
 
-        $project->chunks()->with('document')->chunk(100, function ($chunks) use ($handle) {
+        $project->chunks()->whereHas('document', function($q) {
+            $q->approved();
+        })->with('document')->chunk(100, function ($chunks) use ($handle) {
             foreach ($chunks as $chunk) {
                 $data = [
                     'id' => 'chunk_' . $chunk->id,
@@ -55,6 +58,7 @@ class JsonlDatasetExporter implements DatasetExporterInterface
                     'text' => $chunk->text,
                     'tokens_estimated' => $chunk->tokens_estimated,
                     'source' => $chunk->document->source,
+                    'quality_score' => $chunk->document->quality_score,
                     'metadata' => [
                         'domain' => parse_url($chunk->document->url, PHP_URL_HOST),
                         'language' => $chunk->document->language,

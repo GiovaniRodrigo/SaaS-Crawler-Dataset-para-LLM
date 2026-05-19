@@ -7,6 +7,7 @@ import Card from '@/Components/atoms/Card';
 import JobProgressCard from '@/Components/organisms/JobProgressCard';
 import RecentActivitiesCard from '@/Components/organisms/RecentActivitiesCard';
 import QuickActions from '@/Components/organisms/QuickActions';
+import useTranslation from '@/Hooks/useTranslation';
 import { 
     FolderKanban, 
     Braces, 
@@ -16,17 +17,19 @@ import {
     Activity,
 } from 'lucide-react';
 
-export default function Dashboard() {
-    const activeJobs = [
-        { name: 'empresa.com.br/docs', progress: 72, pages: 892, status: 'Running' },
-        { name: 'docs.site.com/api', progress: 41, pages: 124, status: 'Running' },
-    ];
+interface Props {
+    stats: {
+        total_projects: number;
+        total_documents: number;
+        total_chunks: number;
+        average_quality: number;
+    };
+    activeJobs: any[];
+    recentActivities: any[];
+}
 
-    const recentActivities = [
-        { user: 'Ana', action: 'Exportou dataset', project: 'Base KB', time: '14:10', type: 'export' },
-        { user: 'João', action: 'Domínio validado', project: 'Manual Interno', time: '13:50', type: 'domain' },
-        { user: 'Sistema', action: 'Job finalizado', project: 'Docs API', time: '12:30', type: 'job' },
-    ];
+export default function Dashboard({ stats, activeJobs, recentActivities }: Props) {
+    const { t } = useTranslation();
 
     return (
         <AuthenticatedLayout
@@ -34,52 +37,48 @@ export default function Dashboard() {
                 <div className="flex items-center justify-between">
                     <div>
                         <Typography variant="h1" className="font-bold text-slate-100">
-                            Dashboard
+                            {t('messages.dashboard')}
                         </Typography>
                         <Typography variant="small" className="text-slate-500">
-                            Bem-vindo de volta! Aqui está o resumo dos seus datasets.
+                            {t('messages.welcome_back')}
                         </Typography>
                     </div>
                     <div className="flex gap-3">
                         <Link href={route('projects.create')}>
                             <Button variant="outline" icon={<Plus className="h-4 w-4" />}>
-                                Novo Projeto
+                                {t('messages.new_project')}
                             </Button>
                         </Link>
                         <Button icon={<Zap className="h-4 w-4" />}>
-                            Novo Job
+                            {t('messages.new_job')}
                         </Button>
                     </div>
                 </div>
             }
         >
-            <Head title="Dashboard" />
+            <Head title={t('messages.dashboard')} />
 
             {/* KPI Grid */}
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
                 <MetricCard 
-                    label="Projetos Ativos" 
-                    value="8" 
+                    label={t('messages.projects')} 
+                    value={stats.total_projects.toString()} 
                     icon={<FolderKanban className="h-6 w-6" />}
-                    trend={{ value: '12%', isPositive: true }}
                 />
                 <MetricCard 
-                    label="Páginas Coletadas" 
-                    value="24.3k" 
+                    label={t('messages.documents')} 
+                    value={stats.total_documents > 1000 ? (stats.total_documents / 1000).toFixed(1) + 'k' : stats.total_documents.toString()} 
                     icon={<Activity className="h-6 w-6" />}
-                    trend={{ value: '5.2%', isPositive: true }}
                 />
                 <MetricCard 
-                    label="Chunks Gerados" 
-                    value="91.2k" 
+                    label={t('messages.chunks')} 
+                    value={stats.total_chunks > 1000 ? (stats.total_chunks / 1000).toFixed(1) + 'k' : stats.total_chunks.toString()} 
                     icon={<Braces className="h-6 w-6" />}
-                    trend={{ value: '8.4%', isPositive: true }}
                 />
                 <MetricCard 
                     label="Qualidade Média" 
-                    value="87%" 
+                    value={Math.round(stats.average_quality) + '%'} 
                     icon={<TrendingUp className="h-6 w-6" />}
-                    trend={{ value: '2.1%', isPositive: true }}
                 />
             </div>
 

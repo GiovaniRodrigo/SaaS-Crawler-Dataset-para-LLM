@@ -11,7 +11,11 @@ class SimpleWebPageFetcher implements WebPageFetcherInterface
     public function fetch(string $url): FetchResult
     {
         try {
-            $response = Http::timeout(30)->get($url);
+            $response = Http::timeout(30)
+                ->withHeaders([
+                    'User-Agent' => 'Mozilla/5.0 (compatible; DataCrawlBot/1.0; +https://datacrawl.com.br/bot)'
+                ])
+                ->get($url);
             
             return new FetchResult(
                 url: $url,

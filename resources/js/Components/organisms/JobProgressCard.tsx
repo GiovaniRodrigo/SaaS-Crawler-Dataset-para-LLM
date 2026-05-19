@@ -3,11 +3,16 @@ import Typography from '@/Components/atoms/Typography';
 import { Activity } from 'lucide-react';
 import { Link } from '@inertiajs/react';
 
+import JobTimeline from '@/Components/molecules/JobTimeline';
+
 interface Job {
-    name: string;
-    progress: number;
-    pages: number;
-    status?: string;
+    id: number;
+    project: {
+        name: string;
+    };
+    total_pages_crawled?: number;
+    status: string;
+    progress?: number;
 }
 
 interface JobProgressCardProps {
@@ -21,22 +26,27 @@ export default function JobProgressCard({ jobs }: JobProgressCardProps) {
                 <div className="divide-y divide-slate-800">
                     {jobs.map((job, idx) => (
                         <div key={idx} className="p-6 hover:bg-slate-800/30 transition-colors">
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-4">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400">
                                         <Activity className="h-5 w-5 animate-pulse" />
                                     </div>
                                     <div>
-                                        <Typography variant="body" className="font-bold text-slate-100">{job.name}</Typography>
-                                        <Typography variant="caption" className="text-slate-500">{job.pages} páginas coletadas</Typography>
+                                        <Typography variant="body" className="font-bold text-slate-100">{job.project.name}</Typography>
+                                        <Typography variant="caption" className="text-slate-500">{job.total_pages_crawled || 0} páginas coletadas</Typography>
                                     </div>
                                 </div>
-                                <Typography variant="small" className="font-bold text-cyan-400">{job.progress}%</Typography>
+                                <div className="text-right">
+                                    <Typography variant="small" className="font-bold text-cyan-400 uppercase tracking-widest">{job.status}</Typography>
+                                </div>
                             </div>
-                            <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                            
+                            <JobTimeline currentStatus={job.status} />
+
+                            <div className="mt-6 h-1.5 w-full overflow-hidden rounded-full bg-slate-800/50">
                                 <div 
-                                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]" 
-                                    style={{ width: `${job.progress}%` }} 
+                                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-500 shadow-[0_0_10px_rgba(6,182,212,0.3)]" 
+                                    style={{ width: `${job.progress || 0}%` }} 
                                 />
                             </div>
                         </div>

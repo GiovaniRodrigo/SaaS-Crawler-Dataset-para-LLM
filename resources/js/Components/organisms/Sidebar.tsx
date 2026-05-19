@@ -18,6 +18,7 @@ import {
 import { cn } from '@/utils';
 import Typography from '@/Components/atoms/Typography';
 import ApplicationLogo from '@/Components/atoms/ApplicationLogo';
+import useTranslation from '@/Hooks/useTranslation';
 
 interface SidebarItemProps {
     href: string;
@@ -45,18 +46,19 @@ function SidebarItem({ href, icon: Icon, label, active }: SidebarItemProps) {
 
 export default function Sidebar() {
     const { url } = usePage();
+    const { t } = useTranslation();
 
     const menuItems = [
         { group: 'Geral', items: [
-            { href: route('dashboard'), icon: Gauge, label: 'Dashboard' },
-            { href: route('projects.index'), icon: FolderKanban, label: 'Projetos', activePrefix: 'projects' },
+            { href: route('dashboard'), icon: Gauge, label: t('messages.dashboard') },
+            { href: route('projects.index'), icon: FolderKanban, label: t('messages.projects'), activePrefix: 'projects' },
         ]},
         { group: 'Dados', items: [
-            { href: '#', icon: Globe, label: 'Domínios' },
-            { href: '#', icon: Activity, label: 'Jobs' },
-            { href: '#', icon: CheckSquare, label: 'Revisão' },
-            { href: '#', icon: FileText, label: 'Documentos' },
-            { href: '#', icon: Braces, label: 'Chunks' },
+            { href: '#', icon: Globe, label: t('messages.domains') },
+            { href: '#', icon: Activity, label: t('messages.jobs') },
+            { href: route('documents.review.index'), icon: CheckSquare, label: t('messages.review'), activePrefix: 'review' },
+            { href: '#', icon: FileText, label: t('messages.documents') },
+            { href: route('projects.chunks.index', { project: 1 }), icon: Braces, label: t('messages.chunks') },
         ]},
         { group: 'Sistema', items: [
             { href: '#', icon: Database, label: 'Datasets' },
