@@ -9,7 +9,8 @@ vi.mock('@inertiajs/react', () => ({
     usePage: () => ({
         props: {
             auth: {
-                user: { name: 'Test User', email: 'test@example.com' }
+                user: { name: 'Test User', email: 'test@example.com' },
+                organization: { id: 1, name: 'Test Org', slug: 'test-org', role: 'owner' }
             },
             translations: {
                 messages: {

@@ -5,7 +5,7 @@ import { describe, it, expect } from 'vitest';
 describe('ApplicationLogo Atom', () => {
     it('renders correctly', () => {
         render(<ApplicationLogo />);
-        expect(screen.getByText('Data')).toBeInTheDocument();
+        expect(screen.getByText('Mind')).toBeInTheDocument();
         expect(screen.getByText('Crawl')).toBeInTheDocument();
         const svg = document.querySelector('svg');
         expect(svg).toBeInTheDocument();

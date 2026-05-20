@@ -80,7 +80,7 @@ export default function Index({ jobs }: Props) {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <Link href={`#`} className="text-cyan-400 hover:text-cyan-300">
+                                        <Link href={route('crawl-jobs.show', job.id)} className="text-cyan-400 hover:text-cyan-300">
                                             <ArrowRight className="h-4 w-4" />
                                         </Link>
                                     </td>

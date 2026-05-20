@@ -18,9 +18,9 @@ describe('MetricCard Molecule', () => {
                 trend={{ value: '10%', isPositive: true }} 
             />
         );
-        const trendValue = screen.getByText('+10%');
+        const trendValue = screen.getByText(/↑\s*10%/);
         expect(trendValue).toBeInTheDocument();
-        expect(trendValue).toHaveClass('text-emerald-600');
+        expect(trendValue).toHaveClass('text-emerald-400');
     });
 
     it('renders negative trend correctly', () => {
@@ -31,9 +31,9 @@ describe('MetricCard Molecule', () => {
                 trend={{ value: '5%', isPositive: false }} 
             />
         );
-        const trendValue = screen.getByText('-5%');
+        const trendValue = screen.getByText(/↓\s*5%/);
         expect(trendValue).toBeInTheDocument();
-        expect(trendValue).toHaveClass('text-rose-600');
+        expect(trendValue).toHaveClass('text-rose-400');
     });
 
     it('renders with an icon', () => {

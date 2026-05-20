@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Typography from '@/Components/atoms/Typography';
 import Card from '@/Components/atoms/Card';
 import { Braces, FileText, Globe } from 'lucide-react';
@@ -9,7 +9,8 @@ interface Chunk {
     id: number;
     text: string;
     tokens_estimated: number;
-    document: { title: string, url: string };
+    document_id: number;
+    document: { id: number, title: string, url: string };
     project: { name: string };
     created_at: string;
 }
@@ -69,7 +70,12 @@ export default function IndexAll({ chunks }: Props) {
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button className="text-xs font-bold text-cyan-400 hover:text-cyan-300">Explorar</button>
+                                        <Link 
+                                            href={route('documents.show', chunk.document.id)}
+                                            className="text-xs font-bold text-cyan-400 hover:text-cyan-300"
+                                        >
+                                            Explorar
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}

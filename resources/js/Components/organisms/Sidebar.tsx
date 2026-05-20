@@ -13,7 +13,8 @@ import {
     ShieldCheck, 
     CreditCard, 
     Settings,
-    LogOut
+    LogOut,
+    Users
 } from 'lucide-react';
 import { cn } from '@/utils';
 import Typography from '@/Components/atoms/Typography';
@@ -61,6 +62,7 @@ export default function Sidebar() {
             { href: route('chunks.indexAll'), icon: Braces, label: t('messages.chunks'), activePrefix: 'chunks' },
         ]},
         { group: 'Sistema', items: [
+            { href: route('settings.team'), icon: Users, label: 'Time', activePrefix: 'settings/team' },
             { href: route('settings.datasets'), icon: Database, label: 'Datasets' },
             { href: route('settings.reports'), icon: BarChart3, label: 'Relatórios' },
             { href: route('settings.tokens'), icon: Plug, label: 'API Tokens', activePrefix: 'settings/tokens' },

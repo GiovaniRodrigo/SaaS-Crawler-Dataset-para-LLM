@@ -49,9 +49,11 @@ export default function Dashboard({ stats, activeJobs, recentActivities }: Props
                                 {t('messages.new_project')}
                             </Button>
                         </Link>
-                        <Button icon={<Zap className="h-4 w-4" />}>
-                            {t('messages.new_job')}
-                        </Button>
+                        <Link href={route('projects.index')}>
+                            <Button icon={<Zap className="h-4 w-4" />}>
+                                {t('messages.new_job')}
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             }
@@ -103,9 +105,11 @@ export default function Dashboard({ stats, activeJobs, recentActivities }: Props
                             <Typography variant="small" className="mt-2 text-slate-900 font-medium">
                                 Capture páginas manualmente e envie direto para seus projetos.
                             </Typography>
-                            <Button variant="secondary" size="sm" className="mt-4 bg-slate-950 text-cyan-400 border-none shadow-md hover:bg-slate-900">
-                                Baixar Extensão
-                            </Button>
+                            <a href={route('download-extension')} target="_blank">
+                                <Button variant="secondary" size="sm" className="mt-4 bg-slate-950 text-cyan-400 border-none shadow-md hover:bg-slate-900">
+                                    Baixar Extensão
+                                </Button>
+                            </a>
                         </div>
                         {/* Abstract shapes */}
                         <div className="absolute -right-8 -bottom-8 h-32 w-32 rounded-full bg-white/20 blur-2xl" />

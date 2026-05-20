@@ -25,7 +25,7 @@ export default function ApiTokens({ tokens }: Props) {
     const [newToken, setNewToken] = useState<string | null>(null);
     const [copied, setCopied] = useState(false);
 
-    const { data, setData, post, processing, reset, errors } = useForm({
+    const { data, setData, post, delete: destroy, processing, reset, errors } = useForm({
         name: '',
     });
 
@@ -43,7 +43,7 @@ export default function ApiTokens({ tokens }: Props) {
 
     const deleteToken = (id: number) => {
         if (confirm('Tem certeza que deseja remover este token?')) {
-            useForm().delete(route('settings.tokens.destroy', id));
+            destroy(route('settings.tokens.destroy', id));
         }
     };
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DatasetExportController;
+use App\Http\Controllers\OrganizationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,6 +36,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/download-extension', [DashboardController::class, 'downloadExtension'])->name('download-extension');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -47,6 +49,7 @@ Route::middleware('auth')->group(function () {
 
     // System & Settings Routes
     Route::get('/datasets', [SettingsController::class, 'datasets'])->name('settings.datasets');
+    Route::post('/datasets/export', [SettingsController::class, 'exportDatasets'])->name('settings.datasets.export');
     Route::get('/reports', [SettingsController::class, 'reports'])->name('settings.reports');
     Route::get('/integrations', [SettingsController::class, 'integrations'])->name('settings.integrations');
     Route::get('/audit', [SettingsController::class, 'audit'])->name('settings.audit');
@@ -55,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/tokens', [ApiTokenController::class, 'index'])->name('settings.tokens');
     Route::post('/settings/tokens', [ApiTokenController::class, 'store'])->name('settings.tokens.store');
     Route::delete('/settings/tokens/{id}', [ApiTokenController::class, 'destroy'])->name('settings.tokens.destroy');
+
+    // Organization / Team
+    Route::get('/settings/team', [OrganizationController::class, 'members'])->name('settings.team');
+    Route::post('/settings/team/add', [OrganizationController::class, 'addMember'])->name('settings.team.add');
+    Route::delete('/settings/team/remove/{user}', [OrganizationController::class, 'removeMember'])->name('settings.team.remove');
 
     // Projects
     Route::resource('projects', ProjectController::class);

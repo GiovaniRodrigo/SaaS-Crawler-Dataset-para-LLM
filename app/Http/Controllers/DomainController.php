@@ -15,13 +15,11 @@ class DomainController extends Controller
 {
     public function index(Request $request)
     {
-        $domains = $request->user()->projects()
-            ->with(['domains' => function($q) {
-                $q->withCount('crawledPages');
-            }])
-            ->get()
-            ->pluck('domains')
-            ->flatten();
+        $domains = Domain::whereIn('project_id', $request->user()->projects()->pluck('id'))
+            ->with('project:id,name')
+            ->withCount('crawledPages')
+            ->latest()
+            ->get();
 
         return Inertia::render('Domains/Index', [
             'domains' => $domains

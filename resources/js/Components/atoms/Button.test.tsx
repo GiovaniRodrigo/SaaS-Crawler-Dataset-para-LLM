@@ -25,7 +25,7 @@ describe('Button Atom', () => {
 
     it('applies correct variant classes', () => {
         const { rerender } = render(<Button variant="primary">Primary</Button>);
-        expect(screen.getByRole('button')).toHaveClass('bg-cyan-500');
+        expect(screen.getByRole('button')).toHaveClass('bg-primary-500');
 
         rerender(<Button variant="destructive">Delete</Button>);
         expect(screen.getByRole('button')).toHaveClass('bg-rose-500');

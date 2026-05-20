@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+use App\Traits\BelongsToOrganization;
+
 class Document extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToOrganization;
 
     const STATUS_PENDING = 'pending_review';
     const STATUS_APPROVED = 'approved';
     const STATUS_REJECTED = 'rejected';
 
     protected $fillable = [
+        'organization_id',
         'project_id',
         'crawl_job_id',
         'crawled_page_id',

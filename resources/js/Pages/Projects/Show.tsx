@@ -46,7 +46,14 @@ interface Props {
 
 export default function Show({ project, stats }: Props) {
     const { t } = useTranslation();
-    const [activeTab, setActiveTab] = useState('summary');
+    const { props } = usePage();
+    const [activeTab, setActiveTab] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('tab') || 'summary';
+        }
+        return 'summary';
+    });
 
     const tabs = [
         { id: 'summary', label: t('messages.report'), icon: Activity },

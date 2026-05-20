@@ -13,12 +13,21 @@ use Illuminate\Support\Facades\Gate;
 class SemanticSearchTest extends TestCase
 {
     use RefreshDatabase;
-    use \Illuminate\Foundation\Testing\WithoutMiddleware;
 
     public function test_semantic_search_validates_query()
     {
         $user = User::factory()->create();
-        $project = Project::factory()->create(['user_id' => $user->id]);
+        $organization = \App\Models\Organization::create([
+            'name' => 'Test Org',
+            'slug' => 'test-org',
+            'owner_id' => $user->id
+        ]);
+        $user->organizations()->attach($organization->id, ['role' => 'owner']);
+
+        $project = Project::factory()->create([
+            'user_id' => $user->id,
+            'organization_id' => $organization->id
+        ]);
 
         $response = $this->actingAs($user)->post(route('projects.semantic-search', $project->id), [
             'query' => 'ab' // too short
@@ -30,13 +39,18 @@ class SemanticSearchTest extends TestCase
     public function test_semantic_search_calls_service_and_flashes_results()
     {
         $user = User::factory()->create();
-        $project = Project::factory()->create(['user_id' => $user->id]);
-        
-        // Ensure the policy passes with WithoutMiddleware
-        Gate::define('view', function ($u, $p) use ($user, $project) {
-            return $u->id === $user->id && $p->id === $project->id;
-        });
+        $organization = \App\Models\Organization::create([
+            'name' => 'Test Org',
+            'slug' => 'test-org',
+            'owner_id' => $user->id
+        ]);
+        $user->organizations()->attach($organization->id, ['role' => 'owner']);
 
+        $project = Project::factory()->create([
+            'user_id' => $user->id,
+            'organization_id' => $organization->id
+        ]);
+        
         $mockResults = [
             ['chunk_id' => 1, 'content' => 'Result 1', 'similarity' => 0.9]
         ];

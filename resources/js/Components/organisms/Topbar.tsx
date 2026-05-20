@@ -1,5 +1,5 @@
 import { usePage, Link } from '@inertiajs/react';
-import { Search, Bell, User, ChevronDown, Languages, HelpCircle } from 'lucide-react';
+import { Search, Bell, User, ChevronDown, Languages, HelpCircle, MessageCircle } from 'lucide-react';
 import Typography from '@/Components/atoms/Typography';
 import Badge from '@/Components/atoms/Badge';
 import Dropdown from '@/Components/Dropdown';
@@ -79,11 +79,23 @@ export default function Topbar() {
                             </div>
                             <button 
                                 onClick={() => window.dispatchEvent(new CustomEvent('start-onboarding-tour'))}
-                                className="block w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                             >
+                                <Languages className="h-4 w-4 text-slate-400" />
                                 Tour Guiado
                             </button>
-                            <Dropdown.Link href="#">Documentação</Dropdown.Link>
+                            <button 
+                                className="flex items-center gap-2 w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            >
+                                <MessageCircle className="h-4 w-4 text-slate-400" />
+                                Chat de Suporte
+                            </button>
+                            <Dropdown.Link href="#">
+                                <div className="flex items-center gap-2">
+                                    <HelpCircle className="h-4 w-4 text-slate-400" />
+                                    Documentação
+                                </div>
+                            </Dropdown.Link>
                             <Dropdown.Link href="#">Suporte</Dropdown.Link>
                         </Dropdown.Content>
                     </Dropdown>

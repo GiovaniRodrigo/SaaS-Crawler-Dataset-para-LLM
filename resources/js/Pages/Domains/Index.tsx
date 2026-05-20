@@ -1,5 +1,5 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react';
 import Typography from '@/Components/atoms/Typography';
 import Card from '@/Components/atoms/Card';
 import { Globe, CheckCircle2, XCircle } from 'lucide-react';
@@ -9,6 +9,8 @@ interface Domain {
     id: number;
     domain: string;
     allow_subdomains: boolean;
+    project_id: number;
+    project: { name: string };
     crawled_pages_count: number;
 }
 
@@ -35,6 +37,7 @@ export default function Index({ domains }: Props) {
                         <thead>
                             <tr className="bg-slate-800/50">
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Domínio</th>
+                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Projeto</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Subdomínios</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Páginas Coletadas</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Ações</th>
@@ -52,6 +55,9 @@ export default function Index({ domains }: Props) {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
+                                        <span className="text-sm text-slate-400">{domain.project?.name || 'N/A'}</span>
+                                    </td>
+                                    <td className="px-6 py-4">
                                         {domain.allow_subdomains ? (
                                             <span className="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400">
                                                 <CheckCircle2 className="h-3 w-3" /> Permitido
@@ -66,7 +72,12 @@ export default function Index({ domains }: Props) {
                                         <span className="text-sm text-slate-400">{domain.crawled_pages_count} páginas</span>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <button className="text-xs font-bold text-cyan-400 hover:text-cyan-300">Configurar</button>
+                                        <Link 
+                                            href={route('projects.show', { project: domain.project_id, tab: 'domains' })} 
+                                            className="text-xs font-bold text-cyan-400 hover:text-cyan-300"
+                                        >
+                                            Configurar
+                                        </Link>
                                     </td>
                                 </tr>
                             ))}

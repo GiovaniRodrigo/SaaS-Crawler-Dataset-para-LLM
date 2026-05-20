@@ -13,11 +13,13 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $user = $request->user();
-        $projectIds = $user->projects()->pluck('id');
+        $organization = $request->get('current_organization');
+        
+        // Project::pluck('id') já é filtrado pelo GlobalScope BelongsToOrganization
+        $projectIds = Project::pluck('id');
 
         $stats = [
-            'total_projects' => $user->projects()->count(),
+            'total_projects' => $projectIds->count(),
             'total_documents' => Document::whereIn('project_id', $projectIds)->count(),
             'total_chunks' => Chunk::whereIn('project_id', $projectIds)->count(),
             'average_quality' => Document::whereIn('project_id', $projectIds)->avg('quality_score') ?? 0,
@@ -57,5 +59,32 @@ class DashboardController extends Controller
                     'type' => 'job'
                 ];
             });
+    }
+
+    public function downloadExtension()
+    {
+        $zip = new \ZipArchive();
+        $fileName = 'crawlmind-extension.zip';
+        $tempFile = tempnam(sys_get_temp_dir(), 'extension');
+
+        if ($zip->open($tempFile, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE) {
+            $files = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator(base_path('browser-extension')),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files as $name => $file) {
+                if (!$file->isDir()) {
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen(base_path('browser-extension')) + 1);
+                    $zip->addFile($filePath, $relativePath);
+                }
+            }
+            $zip->close();
+
+            return response()->download($tempFile, $fileName)->deleteFileAfterSend(true);
+        }
+
+        return back()->with('error', 'Não foi possível gerar a extensão.');
     }
 }

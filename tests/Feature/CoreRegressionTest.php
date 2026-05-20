@@ -41,7 +41,17 @@ class CoreRegressionTest extends TestCase
     public function test_project_list_is_accessible_to_owner(): void
     {
         $user = User::factory()->create();
-        Project::factory()->count(2)->create(['user_id' => $user->id]);
+        $organization = \App\Models\Organization::create([
+            'name' => 'Test Org',
+            'slug' => 'test-org',
+            'owner_id' => $user->id
+        ]);
+        $user->organizations()->attach($organization->id, ['role' => 'owner']);
+
+        Project::factory()->count(2)->create([
+            'user_id' => $user->id,
+            'organization_id' => $organization->id
+        ]);
 
         $response = $this->actingAs($user)->get('/projects');
 

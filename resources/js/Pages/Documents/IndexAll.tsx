@@ -97,7 +97,7 @@ export default function IndexAll({ documents }: Props) {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                        <Link href={route('projects.documents.show', { project: doc.project_id, document: doc.id })} className="text-xs font-bold text-cyan-400 hover:text-cyan-300">Ver</Link>
+                                        <Link href={route('documents.show', doc.id)} className="text-xs font-bold text-cyan-400 hover:text-cyan-300">Ver</Link>
                                     </td>
                                 </tr>
                             ))}

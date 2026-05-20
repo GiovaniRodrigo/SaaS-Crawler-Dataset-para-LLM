@@ -53,9 +53,29 @@ class SettingsController extends Controller
 
     public function datasets()
     {
-        return Inertia::render('Settings/Placeholder', [
-            'title' => 'Gerenciador de Datasets',
-            'description' => 'Combine documentos de múltiplos projetos em datasets unificados para treinamento de LLMs.'
+        $projects = \App\Models\Project::withCount(['documents', 'chunks'])
+            ->latest()
+            ->get();
+
+        return Inertia::render('Settings/Datasets', [
+            'projects' => $projects
         ]);
+    }
+
+    public function exportDatasets(Request $request, \App\Actions\Exports\ExportCombinedProjectsAction $action)
+    {
+        $request->validate([
+            'project_ids' => 'required|array|min:1',
+            'project_ids.*' => 'exists:projects,id',
+            'type' => 'required|in:documents,chunks',
+        ]);
+
+        $filePath = $action->execute($request->project_ids, $request->type);
+
+        if (!\Illuminate\Support\Facades\Storage::exists($filePath)) {
+            return back()->with('error', 'Erro ao gerar o arquivo do dataset.');
+        }
+
+        return \Illuminate\Support\Facades\Storage::download($filePath);
     }
 }
