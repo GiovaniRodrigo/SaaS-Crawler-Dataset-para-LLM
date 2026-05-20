@@ -54,21 +54,21 @@ export default function Sidebar() {
             { href: route('projects.index'), icon: FolderKanban, label: t('messages.projects'), activePrefix: 'projects' },
         ]},
         { group: 'Dados', items: [
-            { href: '#', icon: Globe, label: t('messages.domains') },
-            { href: '#', icon: Activity, label: t('messages.jobs') },
+            { href: route('domains.index'), icon: Globe, label: t('messages.domains'), activePrefix: 'domains' },
+            { href: route('crawl-jobs.indexAll'), icon: Activity, label: t('messages.jobs'), activePrefix: 'crawl-jobs' },
             { href: route('documents.review.index'), icon: CheckSquare, label: t('messages.review'), activePrefix: 'review' },
-            { href: '#', icon: FileText, label: t('messages.documents') },
-            { href: route('projects.chunks.index', { project: 1 }), icon: Braces, label: t('messages.chunks') },
+            { href: route('documents.indexAll'), icon: FileText, label: t('messages.documents'), activePrefix: 'documents' },
+            { href: route('chunks.indexAll'), icon: Braces, label: t('messages.chunks'), activePrefix: 'chunks' },
         ]},
         { group: 'Sistema', items: [
-            { href: '#', icon: Database, label: 'Datasets' },
-            { href: '#', icon: BarChart3, label: 'Relatórios' },
-            { href: '#', icon: Plug, label: 'Integrações' },
-            { href: '#', icon: ShieldCheck, label: 'Auditoria' },
+            { href: route('settings.datasets'), icon: Database, label: 'Datasets' },
+            { href: route('settings.reports'), icon: BarChart3, label: 'Relatórios' },
+            { href: route('settings.tokens'), icon: Plug, label: 'API Tokens', activePrefix: 'settings/tokens' },
+            { href: route('settings.audit'), icon: ShieldCheck, label: 'Auditoria' },
         ]},
         { group: 'Configurações', items: [
-            { href: '#', icon: CreditCard, label: 'Plano' },
-            { href: '#', icon: Settings, label: 'Configurações' },
+            { href: route('settings.billing'), icon: CreditCard, label: 'Plano' },
+            { href: route('settings.general'), icon: Settings, label: 'Configurações' },
         ]},
     ];
 
@@ -98,7 +98,7 @@ export default function Sidebar() {
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 space-y-8 overflow-y-auto pr-2 custom-scrollbar">
+                <nav id="sidebar-nav" className="flex-1 space-y-8 overflow-y-auto pr-2 custom-scrollbar">
                     {menuItems.map((group, idx) => (
                         <div key={idx} className="space-y-2">
                             <Typography variant="caption" className="px-3 text-slate-600 font-bold uppercase tracking-wider text-[10px]">

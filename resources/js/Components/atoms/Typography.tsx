@@ -17,11 +17,11 @@ export default function Typography({
     as,
 }: TypographyProps) {
     const variants = {
-        display: 'text-4xl font-bold tracking-tight',
-        h1: 'text-3xl font-bold tracking-tight',
-        h2: 'text-2xl font-bold tracking-tight',
-        h3: 'text-xl font-semibold tracking-tight',
-        h4: 'text-lg font-semibold tracking-tight',
+        display: 'font-display text-5xl font-black tracking-tighter',
+        h1: 'font-display text-3xl font-bold tracking-tight',
+        h2: 'font-display text-2xl font-bold tracking-tight',
+        h3: 'font-display text-xl font-semibold tracking-tight',
+        h4: 'font-display text-lg font-semibold tracking-tight',
         body: 'text-base leading-relaxed',
         small: 'text-sm leading-relaxed',
         caption: 'text-xs font-medium uppercase tracking-wider',

@@ -29,3 +29,12 @@ Use esta skill para tarefas em Laravel, Inertia, React, TypeScript e Tailwind ne
 - Evite logica de negocio dentro de componentes React.
 - Mantenha UI consistente com layouts existentes.
 
+## Internacionalização (i18n)
+
+- **Backend**: Sempre utilize `__('messages.key')` para mensagens de feedback, erros e labels.
+- **Frontend**: 
+    - Use `const { t } = useTranslation();`.
+    - Envolva strings em `{t('messages.key')}`.
+    - Nunca deixe texto "hardcoded" em português ou inglês nos arquivos `.tsx`.
+    - As traduções ficam em `resources/js/Config/languages/` (ou onde estiverem as definições do frontend) e no diretório `lang/` do Laravel.
+

@@ -1,10 +1,13 @@
 import { usePage, Link } from '@inertiajs/react';
-import { Search, Bell, User, ChevronDown, Languages } from 'lucide-react';
+import { Search, Bell, User, ChevronDown, Languages, HelpCircle } from 'lucide-react';
 import Typography from '@/Components/atoms/Typography';
 import Badge from '@/Components/atoms/Badge';
 import Dropdown from '@/Components/Dropdown';
 
+import useTranslation from '@/Hooks/useTranslation';
+
 export default function Topbar() {
+    const { t } = useTranslation();
     const { auth, locale } = usePage<any>().props;
     const user = auth.user;
 
@@ -17,10 +20,19 @@ export default function Topbar() {
 
     return (
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/80 px-8 backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
-            {/* Search bar placeholder */}
-            <div className="flex w-96 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-slate-400 dark:border-slate-800 dark:bg-slate-950/50">
-                <Search className="h-4 w-4" />
-                <span className="text-sm">Buscar projeto, URL, domínio...</span>
+            <div className="flex items-center gap-6">
+                {/* Organization Switcher (Placeholder for now) */}
+                <div id="org-selector" className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-cyan-500 text-white shadow-lg shadow-cyan-500/20">
+                        <span className="text-[10px] font-bold">{auth.organization.name.substring(0, 1)}</span>
+                    </div>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{auth.organization.name}</span>
+                </div>
+
+                <div id="global-search" className="flex w-72 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-slate-400 dark:border-slate-800 dark:bg-slate-950/50">
+                    <Search className="h-4 w-4" />
+                    <span className="text-sm">{t('messages.search_placeholder')}</span>
+                </div>
             </div>
 
             {/* Actions */}
@@ -55,6 +67,27 @@ export default function Topbar() {
                 </div>
 
                 <div className="flex items-center gap-3">
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <button className="relative rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800">
+                                <HelpCircle className="h-5 w-5" />
+                            </button>
+                        </Dropdown.Trigger>
+                        <Dropdown.Content>
+                            <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                                <Typography variant="caption" className="font-bold text-slate-400 uppercase">Ajuda</Typography>
+                            </div>
+                            <button 
+                                onClick={() => window.dispatchEvent(new CustomEvent('start-onboarding-tour'))}
+                                className="block w-full text-left px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            >
+                                Tour Guiado
+                            </button>
+                            <Dropdown.Link href="#">Documentação</Dropdown.Link>
+                            <Dropdown.Link href="#">Suporte</Dropdown.Link>
+                        </Dropdown.Content>
+                    </Dropdown>
+
                     <button className="relative rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800">
                         <Bell className="h-5 w-5" />
                         <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-slate-900" />

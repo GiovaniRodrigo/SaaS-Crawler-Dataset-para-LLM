@@ -15,8 +15,8 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = $request->user()->projects()
-            ->withCount(['documents', 'chunks'])
+        // O Global Scope 'organization' aplicado no model Project cuida da filtragem
+        $projects = Project::withCount(['documents', 'chunks'])
             ->latest()
             ->get();
 
@@ -32,7 +32,13 @@ class ProjectController extends Controller
 
     public function store(StoreProjectRequest $request, CreateProjectAction $action)
     {
-        $project = $action->execute($request->user(), $request->validated());
+        $organization = $request->get('current_organization');
+
+        $project = $action->execute(
+            $request->user(), 
+            $request->validated(),
+            $organization
+        );
 
         return redirect()->route('projects.show', $project)
             ->with('success', 'Projeto criado com sucesso.');

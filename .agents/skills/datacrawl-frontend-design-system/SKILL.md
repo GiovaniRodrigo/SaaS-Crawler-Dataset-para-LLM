@@ -110,6 +110,11 @@ Regra importante no projeto de referencia: **usar `app/globals.css` como fonte p
 | Idioma | Textos de interface em portugues do Brasil |
 | Dominio | Usar vocabulario de crawling, datasets, chunks, exportacoes, LLM, RAG e processamento |
 
+## 2.1 Estética M3 & Shadcn
+> [!TIP]
+> **Material Design 3 (M3)**: Use cantos extremamente arredondados (`rounded-3xl` ou superior), sombras suaves de elevação e uma paleta de cores vibrantes (Cyan, Indigo, Rose) sobre o fundo escuro.
+> **Shadcn UI**: Use a estrutura de componentes baseada em Radix UI + Tailwind. Priorize clareza, tipografia limpa (Outfit/Inter) e estados de hover refinados.
+
 ## 7. Tema Visual Principal
 
 O tema principal e **escuro por padrao**.

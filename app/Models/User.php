@@ -35,4 +35,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class);
     }
+
+    public function organizations(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Organization::class)
+            ->withPivot('role')
+            ->withTimestamps();
+    }
+
+    public function currentOrganization(): ?Organization
+    {
+        return $this->organizations()->first();
+    }
 }

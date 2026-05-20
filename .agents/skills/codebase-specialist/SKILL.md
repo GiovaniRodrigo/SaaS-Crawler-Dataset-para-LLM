@@ -11,18 +11,25 @@ Esta skill serve como o mapa mestre do projeto **DataCrawl**, facilitando o rast
 > [!IMPORTANT]
 > Sempre que uma nova pasta, módulo significativo ou mudança de responsabilidade arquitetural ocorrer, esta skill **DEVE** ser atualizada imediatamente pelo agente.
 
+## Padronização Multilingual (i18n)
+> [!WARNING]
+> **Toda nova implementação ou refatoração DEVE ser multilingual.**
+> - **Backend**: Use as traduções em `lang/{locale}/messages.php`. Nunca use strings fixas em Controllers ou Actions que serão exibidas ao usuário.
+> - **Frontend**: Use o hook `useTranslation` e a função `t('messages.chave')`.
+> - **Estrutura**: Novos termos devem ser adicionados em `pt_BR` e `en` simultaneamente.
+
 ## Mapa de Responsabilidades
 
 ### Backend (Laravel)
-- **`app/Actions`**: Contém a lógica de negócio principal dividida em ações de propósito único (ex: `CreateProjectAction`).
-- **`app/Contracts`**: Interfaces que definem contratos para serviços, facilitando a troca de implementações (ex: `HtmlTextExtractorInterface`).
-- **`app/Http/Controllers`**: Controladores finos que gerenciam o fluxo de requisição/resposta e delegam para as Actions.
-- **`app/Http/Requests`**: Objetos de validação de dados de entrada.
-- **`app/Models`**: Definições das entidades de banco de dados e seus relacionamentos.
-- **`app/Policies`**: Lógica de autorização baseada em permissões de usuário/organização.
-- **`app/Services`**: Serviços pesados ou de integração (Crawler, Processamento de Texto, Pontuação de Qualidade).
-- **`app/Jobs`**: Processos em background, principalmente a execução do crawler.
-- **`database/migrations`**: Histórico e definição do esquema do banco de dados (PostgreSQL + pgvector).
+- **`app/Actions`**: Lógica de negócio principal (ex: `ApproveDocumentAction`). Agora inclui o registro automático de **Auditoria** via `LogAuditAction`.
+- **`app/Contracts`**: Interfaces de contrato (ex: `HtmlTextExtractorInterface`).
+- **`app/Http/Controllers`**: Controladores finos. Novos controladores: `DashboardController`, `ApiTokenController`, `ReviewController`.
+- **`app/Http/Requests`**: Validação de formulários.
+- **`app/Models`**: Entidades. Novos modelos: `AuditLog`, `Document` (com suporte a qualidade e status).
+- **`app/Policies`**: Autorização.
+- **`app/Services`**: Serviços complexos. Inclui o `QualityScorer` (cálculo de score de documentos).
+- **`app/Jobs`**: Processos em background (Crawl, Processamento).
+- **`database/migrations`**: Esquema do banco. Adicionada tabela `audit_logs` e colunas de qualidade em `documents`.
 
 ### Frontend (Inertia + React)
 - **`resources/js/Pages`**: Componentes de página que recebem dados do Inertia.

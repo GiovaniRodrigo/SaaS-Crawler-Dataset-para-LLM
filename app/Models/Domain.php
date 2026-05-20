@@ -24,4 +24,9 @@ class Domain extends Model
     {
         return $this->belongsTo(Project::class);
     }
+
+    public function crawledPages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CrawledPage::class, 'domain', 'domain');
+    }
 }

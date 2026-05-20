@@ -1,5 +1,6 @@
 import Sidebar from '@/Components/organisms/Sidebar';
 import Topbar from '@/Components/organisms/Topbar';
+import OnboardingTour from '@/Components/organisms/OnboardingTour';
 import { PropsWithChildren, ReactNode } from 'react';
 
 export default function Authenticated({
@@ -8,6 +9,7 @@ export default function Authenticated({
 }: PropsWithChildren<{ header?: ReactNode }>) {
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+            <OnboardingTour />
             {/* Sidebar fixed */}
             <Sidebar />
 

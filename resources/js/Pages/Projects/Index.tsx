@@ -23,7 +23,7 @@ export default function Index({ projects }: Props) {
                             Gerencie seus workspaces de coleta e datasets para LLM.
                         </Typography>
                     </div>
-                    <Link href={route('projects.create')}>
+                    <Link href={route('projects.create')} id="create-project-btn">
                         <Button icon={<Plus className="h-4 w-4" />}>
                             Novo Projeto
                         </Button>

@@ -9,6 +9,8 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ChunkController;
 use App\Http\Controllers\DocumentReviewController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ApiTokenController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DatasetExportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Global Data Routes
+    Route::get('/domains', [DomainController::class, 'index'])->name('domains.index');
+    Route::get('/crawl-jobs', [CrawlJobController::class, 'index'])->name('crawl-jobs.indexAll');
+    Route::get('/documents', [DocumentController::class, 'indexAll'])->name('documents.indexAll');
+    Route::get('/chunks', [ChunkController::class, 'indexAll'])->name('chunks.indexAll');
+
+    // System & Settings Routes
+    Route::get('/datasets', [SettingsController::class, 'datasets'])->name('settings.datasets');
+    Route::get('/reports', [SettingsController::class, 'reports'])->name('settings.reports');
+    Route::get('/integrations', [SettingsController::class, 'integrations'])->name('settings.integrations');
+    Route::get('/audit', [SettingsController::class, 'audit'])->name('settings.audit');
+    Route::get('/billing', [SettingsController::class, 'billing'])->name('settings.billing');
+    Route::get('/settings', [SettingsController::class, 'general'])->name('settings.general');
+    Route::get('/settings/tokens', [ApiTokenController::class, 'index'])->name('settings.tokens');
+    Route::post('/settings/tokens', [ApiTokenController::class, 'store'])->name('settings.tokens.store');
+    Route::delete('/settings/tokens/{id}', [ApiTokenController::class, 'destroy'])->name('settings.tokens.destroy');
 
     // Projects
     Route::resource('projects', ProjectController::class);

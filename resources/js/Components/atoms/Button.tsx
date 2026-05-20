@@ -19,11 +19,11 @@ export default function Button({
     ...props
 }: ButtonProps) {
     const variants = {
-        primary: 'bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-sm shadow-cyan-500/20 font-bold',
+        primary: 'bg-primary-500 text-slate-950 hover:bg-primary-400 shadow-lg shadow-primary-500/20 font-bold',
         secondary: 'bg-slate-800 border border-slate-700 text-slate-100 hover:bg-slate-700',
         destructive: 'bg-rose-500 text-white hover:bg-rose-600 shadow-sm shadow-rose-500/20',
         ghost: 'bg-transparent text-slate-400 hover:bg-slate-800 hover:text-slate-100',
-        outline: 'bg-transparent border border-cyan-500 text-cyan-500 hover:bg-cyan-500/10',
+        outline: 'bg-transparent border border-primary-500/50 text-primary-400 hover:bg-primary-500/10',
     };
 
     const sizes = {

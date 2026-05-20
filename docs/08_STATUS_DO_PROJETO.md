@@ -18,15 +18,15 @@
 | Projetos | DONE | `ProjectController`, páginas `Projects/` | CRUD principal presente |
 | Domínios | DONE | `DomainController`, `domains` migration | Cadastro e remoção presentes |
 | Crawling | DONE | `RunCrawlJobAction`, `RunCrawlJob` | MVP funcional |
-| Documentos | DONE | `DocumentController`, `CreateDocumentFromCrawledPageAction` | Geração a partir de crawler/extensão |
+| Documentos | DONE | `DocumentController`, `ReviewController` | Com sistema de **Qualidade** e **Revisão** |
 | Chunks | DONE | `SimpleChunker`, `ChunkController` | Chunking simples |
-| Exportação JSONL | DONE | `JsonlDatasetExporter` | Documents e chunks |
-| Extensão | PARTIAL | `browser-extension/`, `ExtensionCaptureController` | Estrutura simples local |
-| Multi-tenant por organização | TODO | Não identificado no repositório atual | Hoje o isolamento é por usuário |
-| Revisão de conteúdo | TODO | Não identificado no repositório atual | Exporta sem aprovação |
-| Auditoria | TODO | Não identificado no repositório atual | Apenas logs técnicos pontuais |
-| Relatórios | TODO | Não identificado no repositório atual | Há contadores básicos no projeto/job |
-| Integração LLM | TODO | Não identificado no repositório atual | Fora do código atual |
+| Exportação JSONL | DONE | `JsonlDatasetExporter` | Apenas documentos **aprovados** |
+| Extensão | DONE | `browser-extension/`, `ApiTokenController` | Funcional com gestão de tokens |
+| Multi-tenant por organização | TODO | Planejado para Milestone 3 | Hoje o isolamento é por usuário |
+| Revisão de conteúdo | DONE | `ReviewController`, `resources/js/Pages/Review` | Aprovação em massa e scores |
+| Auditoria | DONE | `AuditLog` model, `LogAuditAction` | Rastreamento de ações críticas |
+| Relatórios | PARTIAL | `DashboardController` | Dashboard dinâmico com métricas reais |
+| Integração LLM | TODO | Planejado para Milestone 4 | Fora do código atual |
 
 ## Status por Funcionalidade
 
@@ -40,6 +40,7 @@
 | Extração de links | PARTIAL | Regex em `RunCrawlJobAction` |
 | Extração de conteúdo principal | PARTIAL | Busca `main`, `article` ou `body` |
 | Deduplicação | DONE | `content_hash` por projeto |
-| Exportação de documentos JSONL | DONE | `exportDocuments()` |
-| Exportação de chunks JSONL | DONE | `exportChunks()` |
-| Token para extensão | PARTIAL | Sanctum configurado, mas tela de emissão de token não identificada |
+| Exportação de documentos JSONL | DONE | `exportDocuments()` | Apenas aprovados |
+| Exportação de chunks JSONL | DONE | `exportChunks()` | |
+| Token para extensão | DONE | `ApiTokenController` e tela em Configurações |
+| Branding CrawlMind | DONE | UI completa refinada |

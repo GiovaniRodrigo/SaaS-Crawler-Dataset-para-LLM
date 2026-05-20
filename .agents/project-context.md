@@ -30,22 +30,25 @@ Tambem existe uma extensao de navegador simples para capturar conteudo via API p
 - Extensao: `browser-extension`
 - Docs: `docs`
 
-## Modulos principais
-
 - Projetos
 - Dominios autorizados
 - Crawl jobs
 - Crawled pages
-- Documentos
+- Documentos (Revisão e Aprovação)
 - Chunks
 - Exportacao JSONL
 - Captura via extensao
+- Auditoria
+- API Tokens
 
 ## Status funcional
 
-- MVP de autenticacao, projetos, dominios, crawling, documentos, chunks e exportacao JSONL existe.
-- Extensao existe em formato simples e parcial.
-- Organizacoes, auditoria, revisao de conteudo, relatorios e integracao LLM ainda estao planejados ou ausentes.
+- **CrawlMind (Rebranded)**: Identidade visual premium, Dashboard dinâmico e polimento de UI concluídos.
+- **Curadoria**: Fluxo de revisão, aprovação e qualidade de documentos implementado.
+- **SaaS Base**: Sistema de API Tokens e Logs de Auditoria funcional.
+- **Crawler**: MVP de crawling, extração e exportação JSONL funcional.
+- Extensao funcional via Sanctum.
+- Organizações, relatórios avançados e integração direta com LLM estão no roadmap.
 
 ## Documentacao existente
 

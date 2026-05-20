@@ -9,8 +9,21 @@ use App\Actions\CrawlJobs\CreateCrawlJobAction;
 use App\Jobs\RunCrawlJob;
 use Inertia\Inertia;
 
+use Illuminate\Http\Request;
+
 class CrawlJobController extends Controller
 {
+    public function index(Request $request)
+    {
+        $jobs = CrawlJob::whereIn('project_id', $request->user()->projects()->pluck('id'))
+            ->with('project')
+            ->latest()
+            ->paginate(10);
+
+        return Inertia::render('CrawlJobs/Index', [
+            'jobs' => $jobs
+        ]);
+    }
     public function create(Project $project)
     {
         $this->authorize('view', $project);
