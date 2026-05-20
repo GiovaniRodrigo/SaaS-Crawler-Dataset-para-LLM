@@ -26,11 +26,13 @@ interface SidebarItemProps {
     icon: any;
     label: string;
     active?: boolean;
+    id?: string;
 }
 
-function SidebarItem({ href, icon: Icon, label, active }: SidebarItemProps) {
+function SidebarItem({ href, icon: Icon, label, active, id }: SidebarItemProps) {
     return (
         <Link
+            id={id}
             href={href}
             className={cn(
                 'group flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-medium transition-all duration-200',
@@ -52,18 +54,18 @@ export default function Sidebar() {
     const menuItems = [
         { group: 'Geral', items: [
             { href: route('dashboard'), icon: Gauge, label: t('messages.dashboard') },
-            { href: route('projects.index'), icon: FolderKanban, label: t('messages.projects'), activePrefix: 'projects' },
+            { href: route('projects.index'), icon: FolderKanban, label: t('messages.projects'), activePrefix: 'projects', id: 'nav-projects' },
         ]},
         { group: 'Dados', items: [
-            { href: route('domains.index'), icon: Globe, label: t('messages.domains'), activePrefix: 'domains' },
-            { href: route('crawl-jobs.indexAll'), icon: Activity, label: t('messages.jobs'), activePrefix: 'crawl-jobs' },
-            { href: route('documents.review.index'), icon: CheckSquare, label: t('messages.review'), activePrefix: 'review' },
+            { href: route('domains.index'), icon: Globe, label: t('messages.domains'), activePrefix: 'domains', id: 'nav-domains' },
+            { href: route('crawl-jobs.indexAll'), icon: Activity, label: t('messages.jobs'), activePrefix: 'crawl-jobs', id: 'nav-jobs' },
+            { href: route('documents.review.index'), icon: CheckSquare, label: t('messages.review'), activePrefix: 'review', id: 'nav-review' },
             { href: route('documents.indexAll'), icon: FileText, label: t('messages.documents'), activePrefix: 'documents' },
             { href: route('chunks.indexAll'), icon: Braces, label: t('messages.chunks'), activePrefix: 'chunks' },
         ]},
         { group: 'Sistema', items: [
             { href: route('settings.team'), icon: Users, label: 'Time', activePrefix: 'settings/team' },
-            { href: route('settings.datasets'), icon: Database, label: 'Datasets' },
+            { href: route('settings.datasets'), icon: Database, label: 'Datasets', id: 'nav-datasets' },
             { href: route('settings.reports'), icon: BarChart3, label: 'Relatórios' },
             { href: route('settings.tokens'), icon: Plug, label: 'API Tokens', activePrefix: 'settings/tokens' },
             { href: route('settings.audit'), icon: ShieldCheck, label: 'Auditoria' },

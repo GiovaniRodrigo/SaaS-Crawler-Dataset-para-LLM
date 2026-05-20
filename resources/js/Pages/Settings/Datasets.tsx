@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import Typography from '@/Components/atoms/Typography';
 import Card from '@/Components/atoms/Card';
 import Button from '@/Components/atoms/Button';
@@ -14,11 +14,24 @@ interface Project {
     chunks_count: number;
 }
 
-interface Props {
-    projects: Project[];
+interface DatasetExport {
+    id: number;
+    type: 'documents' | 'chunks';
+    project_names: string;
+    file_size: number;
+    record_count: number;
+    created_at: string;
+    user?: {
+        name: string;
+    };
 }
 
-export default function Datasets({ projects }: Props) {
+interface Props {
+    projects: Project[];
+    exports: DatasetExport[];
+}
+
+export default function Datasets({ projects, exports }: Props) {
     const [selectedProjects, setSelectedProjects] = useState<number[]>([]);
     const [exportType, setExportType] = useState<'documents' | 'chunks'>('documents');
 
@@ -45,48 +58,35 @@ export default function Datasets({ projects }: Props) {
 
     const handleExport = (e: React.FormEvent) => {
         e.preventDefault();
-        
-        // Criar um formulário temporário ou fazer uma requisição POST direta que permita download
-        // O Inertia POST não funciona perfeitamente para downloads de arquivos diretamente sem recarregar o browser, 
-        // mas o Laravel Storage::download retorna uma resposta que o browser reconhece.
-        // A melhor forma de fazer download via POST no Laravel Inertia é submetendo um form nativo do HTML ou via window.open se fosse GET,
-        // mas como é POST, podemos criar um formulário HTML temporário e submetê-lo.
-        
         if (selectedProjects.length === 0) return;
 
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = route('settings.datasets.export');
-        
-        // CSRF Token
-        const csrfToken = (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content;
-        if (csrfToken) {
-            const tokenInput = document.createElement('input');
-            tokenInput.type = 'hidden';
-            tokenInput.name = '_token';
-            tokenInput.value = csrfToken;
-            form.appendChild(tokenInput);
-        }
-
-        // Project IDs
-        selectedProjects.forEach(id => {
-            const input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'project_ids[]';
-            input.value = id.toString();
-            form.appendChild(input);
+        router.post(route('settings.datasets.export'), {
+            project_ids: selectedProjects,
+            type: exportType,
+        }, {
+            onSuccess: () => {
+                setSelectedProjects([]);
+            }
         });
+    };
 
-        // Export Type
-        const typeInput = document.createElement('input');
-        typeInput.type = 'hidden';
-        typeInput.name = 'type';
-        typeInput.value = exportType;
-        form.appendChild(typeInput);
+    const formatBytes = (bytes: number) => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = 2;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    };
 
-        document.body.appendChild(form);
-        form.submit();
-        document.body.removeChild(form);
+    const formatDate = (dateString: string) => {
+        return new Date(dateString).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
     };
 
     return (
@@ -129,9 +129,11 @@ export default function Datasets({ projects }: Props) {
                         <Typography variant="body" className="text-slate-500 max-w-md mx-auto mb-6">
                             Você precisa criar projetos e capturar dados para gerar um dataset unificado.
                         </Typography>
-                        <Button href={route('projects.index')}>
-                            Criar Primeiro Projeto
-                        </Button>
+                        <Link href={route('projects.index')}>
+                            <Button>
+                                Criar Primeiro Projeto
+                            </Button>
+                        </Link>
                     </Card>
                 ) : (
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
@@ -281,6 +283,71 @@ export default function Datasets({ projects }: Props) {
                             </Card>
                         </div>
                     </div>
+                )}
+
+                {/* History Section */}
+                {exports && exports.length > 0 && (
+                    <Card className="border-slate-800 bg-slate-900/40">
+                        <div className="flex items-center gap-3 mb-6">
+                            <Database className="h-5 w-5 text-cyan-400" />
+                            <Typography variant="h4" className="font-bold text-slate-100">
+                                Histórico de Exports
+                            </Typography>
+                        </div>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left text-sm text-slate-300">
+                                <thead className="text-xs uppercase tracking-wider text-slate-500 border-b border-slate-800 bg-slate-950/20">
+                                    <tr>
+                                        <th className="py-3 px-4">Estrutura</th>
+                                        <th className="py-3 px-4">Projetos Inclusos</th>
+                                        <th className="py-3 px-4">Metadados</th>
+                                        <th className="py-3 px-4">Gerado Por</th>
+                                        <th className="py-3 px-4 text-right">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-800/60">
+                                    {exports.map((item) => (
+                                        <tr key={item.id} className="hover:bg-slate-800/10 transition-colors">
+                                            <td className="py-4 px-4 font-semibold text-slate-200">
+                                                <div className="flex items-center gap-2">
+                                                    {item.type === 'documents' ? (
+                                                        <FileText className="h-4 w-4 text-cyan-400" />
+                                                    ) : (
+                                                        <Braces className="h-4 w-4 text-emerald-400" />
+                                                    )}
+                                                    <span>{item.type === 'documents' ? 'Documentos' : 'Chunks'}</span>
+                                                </div>
+                                            </td>
+                                            <td className="py-4 px-4 text-xs text-slate-400 max-w-xs truncate" title={item.project_names}>
+                                                {item.project_names}
+                                            </td>
+                                            <td className="py-4 px-4 text-xs">
+                                                <div className="flex flex-col gap-0.5">
+                                                    <span>{item.record_count.toLocaleString()} registros</span>
+                                                    <span className="text-slate-500">{formatBytes(item.file_size)}</span>
+                                                </div>
+                                            </td>
+                                            <td className="py-4 px-4 text-xs">
+                                                <div className="flex flex-col gap-0.5">
+                                                    <span>{item.user?.name || 'Sistema'}</span>
+                                                    <span className="text-slate-500">{formatDate(item.created_at)}</span>
+                                                </div>
+                                            </td>
+                                            <td className="py-4 px-4 text-right">
+                                                <a 
+                                                    href={route('settings.datasets.download', item.id)}
+                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-xs font-bold transition-all animate-pulse-slow"
+                                                >
+                                                    <Download className="h-3.5 w-3.5" />
+                                                    <span>Download</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </Card>
                 )}
             </div>
         </AuthenticatedLayout>

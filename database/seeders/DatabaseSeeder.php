@@ -26,6 +26,9 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        // Chamar o seeder de demonstração com base de conhecimento real
+        $this->call(DemoDatasetSeeder::class);
+
         // 2. Dados de Teste (Somente Local/Dev)
         // Em ambiente local, dev use factory
         if (app()->environment(['local', 'dev'])) {

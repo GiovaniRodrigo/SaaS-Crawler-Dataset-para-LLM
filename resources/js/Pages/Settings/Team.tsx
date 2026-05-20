@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import Typography from '@/Components/atoms/Typography';
@@ -7,7 +7,7 @@ import Button from '@/Components/atoms/Button';
 import Input from '@/Components/atoms/Input';
 import InputLabel from '@/Components/atoms/InputLabel';
 import InputError from '@/Components/atoms/InputError';
-import { Users, UserPlus, Shield, Mail, Trash2 } from 'lucide-react';
+import { Users, UserPlus, Shield, Mail, Trash2, Copy, Check, Clock, XCircle } from 'lucide-react';
 
 interface Member {
     id: number;
@@ -16,21 +16,32 @@ interface Member {
     role: string;
 }
 
+interface Invitation {
+    id: number;
+    email: string;
+    role: string;
+    accept_url: string;
+    created_at: string;
+}
+
 interface Props {
     organization: {
         name: string;
         slug: string;
     };
     members: Member[];
+    invitations: Invitation[];
 }
 
-export default function Team({ organization, members }: Props) {
+export default function Team({ organization, members, invitations }: Props) {
     const { auth } = usePage().props as any;
 
     const { data, setData, post, delete: destroy, processing, reset, errors } = useForm({
         email: '',
         role: 'member',
     });
+
+    const [copiedId, setCopiedId] = useState<number | null>(null);
 
     const addMember = (e: React.FormEvent) => {
         e.preventDefault();
@@ -43,6 +54,18 @@ export default function Team({ organization, members }: Props) {
         if (confirm('Tem certeza que deseja remover este membro do time?')) {
             destroy(route('settings.team.remove', id));
         }
+    };
+
+    const cancelInvitation = (id: number) => {
+        if (confirm('Tem certeza que deseja cancelar este convite?')) {
+            destroy(route('settings.team.cancel_invite', id));
+        }
+    };
+
+    const copyLink = (id: number, url: string) => {
+        navigator.clipboard.writeText(url);
+        setCopiedId(id);
+        setTimeout(() => setCopiedId(null), 2000);
     };
 
     return (
@@ -159,6 +182,81 @@ export default function Team({ organization, members }: Props) {
                         </tbody>
                     </table>
                 </Card>
+
+                {/* Pending Invitations List */}
+                {invitations && invitations.length > 0 && (
+                    <Card padding="none" className="overflow-hidden border-slate-800 bg-slate-900/20">
+                        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <Clock className="h-5 w-5 text-cyan-400" />
+                                <Typography variant="h4" className="font-bold text-slate-100">Convites Pendentes</Typography>
+                            </div>
+                            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">{invitations.length} CONVITES</span>
+                        </div>
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-slate-800/20">
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Destinatário</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Papel</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">URL de Acesso</th>
+                                    <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-800/60">
+                                {invitations.map((invite) => (
+                                    <tr key={invite.id} className="hover:bg-slate-800/10 transition-colors">
+                                        <td className="px-6 py-4">
+                                            <div>
+                                                <Typography variant="body" className="font-medium text-slate-200">{invite.email}</Typography>
+                                                <Typography variant="small" className="text-slate-500">
+                                                    Enviado em {new Date(invite.created_at).toLocaleDateString('pt-BR')}
+                                                </Typography>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-2">
+                                                <Shield className={`h-4 w-4 ${invite.role === 'admin' ? 'text-cyan-400' : 'text-slate-500'}`} />
+                                                <span className={`text-sm ${invite.role === 'admin' ? 'text-slate-200' : 'text-slate-400'}`}>
+                                                    {invite.role === 'admin' ? 'Administrador' : 'Membro'}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center gap-2 max-w-xs">
+                                                <input 
+                                                    type="text" 
+                                                    readOnly 
+                                                    value={invite.accept_url} 
+                                                    className="bg-slate-950 border border-slate-800/80 rounded-lg px-2.5 py-1 text-xs text-slate-500 flex-1 truncate select-all"
+                                                />
+                                                <button
+                                                    onClick={() => copyLink(invite.id, invite.accept_url)}
+                                                    className="p-1.5 rounded-lg bg-slate-800/80 border border-slate-700 text-slate-400 hover:text-cyan-400 transition-colors shrink-0"
+                                                    title="Copiar Link do Convite"
+                                                >
+                                                    {copiedId === invite.id ? (
+                                                        <Check className="h-3.5 w-3.5 text-emerald-400" />
+                                                    ) : (
+                                                        <Copy className="h-3.5 w-3.5" />
+                                                    )}
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td className="px-6 py-4 text-right">
+                                            <button 
+                                                onClick={() => cancelInvitation(invite.id)}
+                                                className="text-slate-500 hover:text-rose-500 transition-colors p-2"
+                                                title="Cancelar Convite"
+                                            >
+                                                <XCircle className="h-5 w-5" />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </Card>
+                )}
             </div>
         </AuthenticatedLayout>
     );

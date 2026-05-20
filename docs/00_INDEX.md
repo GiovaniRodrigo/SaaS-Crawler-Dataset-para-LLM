@@ -6,6 +6,7 @@
 - [Módulos](./02_MODULOS.md)
 - [Fluxos Principais](./03_FLUXOS_PRINCIPAIS.md)
 - [Regras de Negócio](./04_REGRAS_DE_NEGOCIO.md)
+- [Resumo do Projeto](./12_RESUMO_DO_PROJETO.md)
 
 ## Técnico
 
@@ -19,4 +20,3 @@
 - [09. Roadmap Menor Custo](./09_ROADMAP_MENOR_CUSTO.md)
 - [10. Pendências e Riscos](./10_PENDENCIAS_E_RISCOS.md)
 - [11. Design Hi-Fi](./11_DESIGN_HI_FI.md)
-

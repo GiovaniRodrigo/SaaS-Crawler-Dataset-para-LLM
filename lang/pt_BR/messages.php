@@ -77,9 +77,9 @@ return [
     'last_activity' => 'Última Atividade',
     'crawler_finished' => 'Crawler Finalizado',
     'new_pages_count' => 'há :time • :count novas páginas',
-    'product_title' => 'O motor por trás da sua IA',
-    'product_desc' => 'Nossa plataforma automatiza o ciclo completo de vida dos dados, desde a descoberta de URLs até a exportação de fragmentos semânticos prontos para RAG.',
-    'how_it_works' => 'Como o DataCrawl funciona',
+    'product_title' => 'Não é crawler. É infraestrutura de dados para IA.',
+    'product_desc' => 'O CrawlMind coleta páginas autorizadas, limpa conteúdo, gera chunks, permite revisão humana e exporta JSONL rastreável para LLMs, RAG, chatbots e automações.',
+    'how_it_works' => 'Como o CrawlMind funciona',
     'step_1_title' => 'Descoberta e Coleta',
     'step_1_desc' => 'Nossos crawlers percorrem os domínios autorizados, respeitando limites de profundidade e regras de robots.txt.',
     'step_2_title' => 'Extração e Limpeza',
@@ -129,18 +129,52 @@ return [
     'organization' => 'Organização',
     'personal_team' => 'Time Pessoal',
     'onboarding' => [
-        'welcome_title' => 'Bem-vindo ao CrawlMind!',
-        'welcome_desc' => 'Vamos fazer um tour rápido para você dominar a plataforma em segundos.',
-        'sidebar_title' => 'Navegação Principal',
-        'sidebar_desc' => 'Aqui você acessa seus projetos, domínios autorizados e execuções do crawler.',
-        'org_title' => 'Sua Organização',
-        'org_desc' => 'O CrawlMind é focado em times. Aqui você vê em qual organização está trabalhando.',
-        'project_title' => 'Comece por aqui',
-        'project_desc' => 'Crie seu primeiro projeto para começar a coletar dados da web.',
-        'search_title' => 'Busca Global',
-        'search_desc' => 'Encontre qualquer coisa em seus datasets instantaneamente.',
         'next' => 'Próximo',
         'prev' => 'Anterior',
         'done' => 'Concluir',
+        
+        // Dashboard
+        'dashboard_welcome_title' => 'Bem-vindo ao CrawlMind!',
+        'dashboard_welcome_desc' => 'Esta é a sua central de infraestrutura de dados para IA. Vamos fazer um tour rápido pelas funcionalidades do Painel.',
+        'dashboard_org_title' => 'Organização Ativa',
+        'dashboard_org_desc' => 'Aqui você seleciona seu time e visualiza as configurações da sua organização atual.',
+        'dashboard_search_title' => 'Busca Semântica Global',
+        'dashboard_search_desc' => 'Pesquise instantaneamente em todos os fragmentos de texto indexados usando busca vetorial.',
+        'dashboard_projects_title' => 'Gerenciar Projetos',
+        'dashboard_projects_desc' => 'Clique aqui para prosseguir e criar seu primeiro projeto ou base de dados.',
+
+        // Projects index
+        'projects_welcome_title' => 'Seus Projetos',
+        'projects_welcome_desc' => 'Gerencie seus workspaces de coletas. Cada projeto reúne domínios autorizados, jobs e datasets específicos.',
+        'projects_new_title' => 'Novo Projeto',
+        'projects_new_desc' => 'Clique aqui para criar um novo projeto e começar a coletar dados estruturados para IA.',
+
+        // Project details page (Show)
+        'project_show_welcome_title' => 'Explorando o Projeto',
+        'project_show_welcome_desc' => 'Esta é a área principal de controle do seu projeto. Aqui você gerencia domínios, coletas e exportações.',
+        'project_show_tabs_title' => 'Navegação do Projeto',
+        'project_show_tabs_desc' => 'Alterne entre o cadastro de Domínios autorizados, Execuções (Jobs) do crawler, Documentos coletados e Configurações.',
+        'project_show_execute_title' => 'Disparar Coleta (Crawl)',
+        'project_show_execute_desc' => 'Clique aqui para criar e iniciar uma nova tarefa de raspagem de URLs sob demanda.',
+
+        // Domains
+        'domains_welcome_title' => 'Domínios Autorizados',
+        'domains_welcome_desc' => 'Todos os sites coletados pelo CrawlMind precisam de autorização prévia por conformidade e segurança legal.',
+        'domains_how_title' => 'Como Adicionar Domínios',
+        'domains_how_desc' => 'Para cadastrar um novo domínio de raspagem, acesse um de seus Projetos e use a aba "Domínios".',
+
+        // Crawl Jobs
+        'jobs_welcome_title' => 'Histórico de Coletas (Jobs)',
+        'jobs_welcome_desc' => 'Acompanhe as execuções ativas ou passadas do crawler, total de páginas salvas e eventuais erros de rede.',
+
+        // Review
+        'review_welcome_title' => 'Curadoria e Revisão de Dados',
+        'review_welcome_desc' => 'Aqui você revisa o conteúdo coletado. A IA calcula automaticamente um score de qualidade de 0 a 100.',
+        'review_table_title' => 'Aprovação e Edição',
+        'review_table_desc' => 'Use a tabela para ler o texto principal coletado, aprovar registros ou editá-los para o dataset final.',
+
+        // Datasets
+        'datasets_welcome_title' => 'Datasets Prontos para IA',
+        'datasets_welcome_desc' => 'Aqui você exporta e baixa os documentos e chunks em formato JSONL limpo e unificado.',
     ],
 ];

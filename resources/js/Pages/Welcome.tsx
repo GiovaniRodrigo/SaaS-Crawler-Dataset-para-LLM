@@ -54,7 +54,7 @@ export default function Welcome({ auth }: PageProps) {
 
     return (
         <MarketingLayout>
-            <Head title="DataCrawl - SaaS para Crawler e Dataset LLM" />
+            <Head title="CrawlMind - Transforme sites em datasets prontos para IA" />
 
             {/* Hero Section */}
             <section className="relative overflow-hidden py-20 lg:py-32">
@@ -135,6 +135,84 @@ export default function Welcome({ auth }: PageProps) {
                                 </div>
                             </div>
                         </Card>
+                    </div>
+                </div>
+            </section>
+
+            {/* Metrics Grid */}
+            <section className="py-12 border-y border-slate-900 bg-slate-950/20">
+                <div className="mx-auto max-w-7xl px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        {metrics.map((m, i) => (
+                            <Card key={i} className="border-slate-800 bg-slate-900/30 hover:border-cyan-500/20 transition-all flex items-center gap-4 p-6">
+                                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400">
+                                    {m.icon}
+                                </div>
+                                <div>
+                                    <Typography variant="h3" className="text-3xl font-extrabold text-white">{m.value}</Typography>
+                                    <Typography variant="caption" className="text-slate-500 font-medium">{m.label}</Typography>
+                                </div>
+                            </Card>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Steps Section / How it works */}
+            <section className="py-20 lg:py-32 bg-slate-900/10">
+                <div className="mx-auto max-w-7xl px-6">
+                    <div className="text-center max-w-3xl mx-auto mb-20">
+                        <Badge variant="cyan" className="mb-4">COMO FUNCIONA</Badge>
+                        <Typography variant="h2" className="text-4xl font-extrabold text-white">Do Domínio ao Dataset em 5 Etapas</Typography>
+                        <Typography variant="body" className="text-slate-400 mt-4">
+                            Toda a infraestrutura necessária para coletar e limpar dados estruturados, minimizando o ruído e mantendo a rastreabilidade total do conteúdo original.
+                        </Typography>
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 relative">
+                        {steps.map((s, i) => (
+                            <div key={i} className="relative group">
+                                <Card className="h-full border-slate-800 bg-slate-900/20 hover:border-cyan-500/30 transition-all p-6 flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-800 text-slate-400 font-bold mb-6 text-sm border border-slate-700/50 group-hover:bg-cyan-500/10 group-hover:text-cyan-400 group-hover:border-cyan-500/20 transition-colors">
+                                            0{i + 1}
+                                        </div>
+                                        <Typography variant="body" className="font-bold text-slate-100 text-lg mb-2">{s.title}</Typography>
+                                        <Typography variant="caption" className="text-slate-400 leading-relaxed">{s.desc}</Typography>
+                                    </div>
+                                    {i < 4 && (
+                                        <div className="hidden lg:block absolute top-1/2 -right-6 -translate-y-1/2 text-slate-700 pointer-events-none">
+                                            <ArrowRight className="h-5 w-5" />
+                                        </div>
+                                    )}
+                                </Card>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Features Grid Section */}
+            <section className="py-20 lg:py-32 bg-slate-950 border-t border-slate-900">
+                <div className="mx-auto max-w-7xl px-6">
+                    <div className="text-center max-w-3xl mx-auto mb-20">
+                        <Badge variant="cyan" className="mb-4">RECURSOS PRINCIPAIS</Badge>
+                        <Typography variant="h2" className="text-4xl font-extrabold text-white">Preparação de Dados de Nível Industrial</Typography>
+                        <Typography variant="body" className="text-slate-400 mt-4">
+                            Garantimos qualidade de dados excepcional para seus modelos de linguagem, economizando custos de tokens e limpando ruídos indesejados automaticamente.
+                        </Typography>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {features.map((f, i) => (
+                            <Card key={i} className="border-slate-800 bg-slate-900/10 hover:border-cyan-500/30 transition-all group p-6">
+                                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400 transition-transform group-hover:scale-110">
+                                    {f.icon}
+                                </div>
+                                <Typography variant="body" className="font-bold text-slate-100 text-lg mb-2">{f.title}</Typography>
+                                <Typography variant="caption" className="text-slate-400 leading-relaxed">{f.desc}</Typography>
+                            </Card>
+                        ))}
                     </div>
                 </div>
             </section>

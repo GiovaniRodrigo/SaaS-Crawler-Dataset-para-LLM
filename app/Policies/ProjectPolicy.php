@@ -14,7 +14,7 @@ class ProjectPolicy
 
     public function view(User $user, Project $project): bool
     {
-        return $user->id === $project->user_id;
+        return $user->belongsToOrganization($project->organization_id);
     }
 
     public function create(User $user): bool
@@ -24,11 +24,11 @@ class ProjectPolicy
 
     public function update(User $user, Project $project): bool
     {
-        return $user->id === $project->user_id;
+        return $user->belongsToOrganization($project->organization_id);
     }
 
     public function delete(User $user, Project $project): bool
     {
-        return $user->id === $project->user_id;
+        return $user->belongsToOrganization($project->organization_id);
     }
 }

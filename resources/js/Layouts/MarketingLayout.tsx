@@ -87,7 +87,7 @@ export default function MarketingLayout({ children }: PropsWithChildren) {
                             <ApplicationLogo />
                         </div>
                         <Typography variant="caption" className="text-slate-500">
-                            © 2026 DataCrawl. Todos os direitos reservados.
+                            © 2026 CrawlMind. Todos os direitos reservados.
                         </Typography>
                         <div className="flex gap-6">
                             {['Twitter', 'GitHub', 'LinkedIn'].map(s => (

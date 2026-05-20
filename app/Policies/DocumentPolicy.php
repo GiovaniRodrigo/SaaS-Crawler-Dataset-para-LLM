@@ -9,6 +9,6 @@ class DocumentPolicy
 {
     public function view(User $user, Document $document): bool
     {
-        return $user->id === $document->project->user_id;
+        return $user->belongsToOrganization($document->project->organization_id);
     }
 }

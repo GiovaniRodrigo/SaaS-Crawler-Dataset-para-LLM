@@ -9,7 +9,7 @@ class DomainPolicy
 {
     public function view(User $user, Domain $domain): bool
     {
-        return $user->id === $domain->project->user_id;
+        return $user->belongsToOrganization($domain->project->organization_id);
     }
 
     public function create(User $user): bool
@@ -19,6 +19,6 @@ class DomainPolicy
 
     public function delete(User $user, Domain $domain): bool
     {
-        return $user->id === $domain->project->user_id;
+        return $user->belongsToOrganization($domain->project->organization_id);
     }
 }

@@ -77,9 +77,9 @@ return [
     'last_activity' => 'Last Activity',
     'crawler_finished' => 'Crawler Finished',
     'new_pages_count' => ':time ago • :count new pages',
-    'product_title' => 'The engine behind your AI',
-    'product_desc' => 'Our platform automates the entire data lifecycle, from URL discovery to exporting semantic chunks ready for RAG.',
-    'how_it_works' => 'How DataCrawl works',
+    'product_title' => 'Not a crawler. Data infrastructure for AI.',
+    'product_desc' => 'CrawlMind collects authorized pages, cleans content, generates chunks, allows human review, and exports traceable JSONL for LLMs, RAG, chatbots, and automations.',
+    'how_it_works' => 'How CrawlMind works',
     'step_1_title' => 'Discovery and Collection',
     'step_1_desc' => 'Our crawlers traverse authorized domains, respecting depth limits and robots.txt rules.',
     'step_2_title' => 'Extraction and Cleaning',
@@ -129,18 +129,52 @@ return [
     'organization' => 'Organization',
     'personal_team' => 'Personal Team',
     'onboarding' => [
-        'welcome_title' => 'Welcome to CrawlMind!',
-        'welcome_desc' => 'Let\'s take a quick tour to help you master the platform in seconds.',
-        'sidebar_title' => 'Main Navigation',
-        'sidebar_desc' => 'Here you can access your projects, authorized domains, and crawler executions.',
-        'org_title' => 'Your Organization',
-        'org_desc' => 'CrawlMind is team-focused. Here you can see which organization you are working in.',
-        'project_title' => 'Start Here',
-        'project_desc' => 'Create your first project to start collecting web data.',
-        'search_title' => 'Global Search',
-        'search_desc' => 'Find anything in your datasets instantly.',
         'next' => 'Next',
         'prev' => 'Previous',
         'done' => 'Done',
+        
+        // Dashboard
+        'dashboard_welcome_title' => 'Welcome to CrawlMind!',
+        'dashboard_welcome_desc' => 'This is your AI data infrastructure center. Let\'s take a quick tour of the Dashboard features.',
+        'dashboard_org_title' => 'Active Organization',
+        'dashboard_org_desc' => 'Here you select your team and view settings for your current organization.',
+        'dashboard_search_title' => 'Global Semantic Search',
+        'dashboard_search_desc' => 'Search instantly across all indexed text fragments using vector search.',
+        'dashboard_projects_title' => 'Manage Projects',
+        'dashboard_projects_desc' => 'Click here to proceed and create your first project or database.',
+
+        // Projects index
+        'projects_welcome_title' => 'Your Projects',
+        'projects_welcome_desc' => 'Manage your crawl workspaces. Each project brings together authorized domains, jobs, and specific datasets.',
+        'projects_new_title' => 'New Project',
+        'projects_new_desc' => 'Click here to create a new project and start gathering structured data for AI.',
+
+        // Project details page (Show)
+        'project_show_welcome_title' => 'Exploring the Project',
+        'project_show_welcome_desc' => 'This is the main control area for your project. Here you manage domains, crawls, and exports.',
+        'project_show_tabs_title' => 'Project Navigation',
+        'project_show_tabs_desc' => 'Switch between authorized Domains, Crawler executions (Jobs), scraped Documents, and Settings.',
+        'project_show_execute_title' => 'Trigger Crawl',
+        'project_show_execute_desc' => 'Click here to create and start a new url scraping job on demand.',
+
+        // Domains
+        'domains_welcome_title' => 'Authorized Domains',
+        'domains_welcome_desc' => 'All sites crawled by CrawlMind need prior authorization for compliance and legal safety.',
+        'domains_how_title' => 'How to Add Domains',
+        'domains_how_desc' => 'To register a new crawl domain, go to one of your Projects and use the "Domains" tab.',
+
+        // Crawl Jobs
+        'jobs_welcome_title' => 'Crawl History (Jobs)',
+        'jobs_welcome_desc' => 'Track active or past crawler executions, total pages saved, and any network errors.',
+
+        // Review
+        'review_welcome_title' => 'Data Curation & Review',
+        'review_welcome_desc' => 'Here you review the gathered content. The AI automatically calculates a quality score from 0 to 100.',
+        'review_table_title' => 'Approval and Editing',
+        'review_table_desc' => 'Use the table to read the scraped main text, approve records, or edit them for the final dataset.',
+
+        // Datasets
+        'datasets_welcome_title' => 'AI-Ready Datasets',
+        'datasets_welcome_desc' => 'Here you export and download approved documents and chunks in a clean, unified JSONL format.',
     ],
 ];

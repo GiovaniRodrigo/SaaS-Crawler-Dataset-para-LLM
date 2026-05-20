@@ -7,6 +7,7 @@ use App\Models\Document;
 use App\Contracts\TextProcessing\HtmlTextExtractorInterface;
 use App\Contracts\TextProcessing\TextCleanerInterface;
 use App\Contracts\TextProcessing\ContentHasherInterface;
+use App\Contracts\AI\QualityScorerInterface;
 use App\Actions\Chunks\GenerateChunksForDocumentAction;
 
 class CreateDocumentFromCrawledPageAction
@@ -15,7 +16,7 @@ class CreateDocumentFromCrawledPageAction
         protected HtmlTextExtractorInterface $extractor,
         protected TextCleanerInterface $cleaner,
         protected ContentHasherInterface $hasher,
-        protected \App\Services\Quality\QualityScorer $qualityScorer,
+        protected QualityScorerInterface $qualityScorer,
         protected GenerateChunksForDocumentAction $generateChunksAction
     ) {}
 

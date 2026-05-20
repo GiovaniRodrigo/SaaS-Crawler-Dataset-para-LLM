@@ -13,6 +13,8 @@ use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DatasetExportController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\StripeBillingController;
+use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -30,6 +32,8 @@ Route::get('/product', [MarketingController::class, 'product'])->name('product')
 Route::get('/features', [MarketingController::class, 'features'])->name('features');
 Route::get('/security', [MarketingController::class, 'security'])->name('security');
 Route::get('/pricing', [MarketingController::class, 'pricing'])->name('pricing');
+Route::get('/settings/team/invitations/accept/{token}', [OrganizationController::class, 'acceptInvitation'])->name('settings.team.accept_invite');
+Route::post('/webhook/stripe', [StripeWebhookController::class, 'handleWebhook'])->name('stripe.webhook');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -50,10 +54,13 @@ Route::middleware('auth')->group(function () {
     // System & Settings Routes
     Route::get('/datasets', [SettingsController::class, 'datasets'])->name('settings.datasets');
     Route::post('/datasets/export', [SettingsController::class, 'exportDatasets'])->name('settings.datasets.export');
+    Route::get('/datasets/exports/{datasetExport}/download', [SettingsController::class, 'downloadExport'])->name('settings.datasets.download');
     Route::get('/reports', [SettingsController::class, 'reports'])->name('settings.reports');
     Route::get('/integrations', [SettingsController::class, 'integrations'])->name('settings.integrations');
     Route::get('/audit', [SettingsController::class, 'audit'])->name('settings.audit');
     Route::get('/billing', [SettingsController::class, 'billing'])->name('settings.billing');
+    Route::post('/settings/billing/subscribe', [StripeBillingController::class, 'subscribe'])->name('settings.billing.subscribe');
+    Route::post('/settings/billing/portal', [StripeBillingController::class, 'portal'])->name('settings.billing.portal');
     Route::get('/settings', [SettingsController::class, 'general'])->name('settings.general');
     Route::get('/settings/tokens', [ApiTokenController::class, 'index'])->name('settings.tokens');
     Route::post('/settings/tokens', [ApiTokenController::class, 'store'])->name('settings.tokens.store');
@@ -63,6 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings/team', [OrganizationController::class, 'members'])->name('settings.team');
     Route::post('/settings/team/add', [OrganizationController::class, 'addMember'])->name('settings.team.add');
     Route::delete('/settings/team/remove/{user}', [OrganizationController::class, 'removeMember'])->name('settings.team.remove');
+    Route::delete('/settings/team/invitations/{invitation}', [OrganizationController::class, 'cancelInvitation'])->name('settings.team.cancel_invite');
 
     // Projects
     Route::resource('projects', ProjectController::class);

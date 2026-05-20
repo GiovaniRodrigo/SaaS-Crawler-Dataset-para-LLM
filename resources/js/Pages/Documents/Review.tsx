@@ -105,7 +105,7 @@ export default function Review({ project, documents }: Props) {
                     {documents.data.length > 0 ? (
                         <Card padding="none" className="overflow-hidden border-slate-800 bg-slate-900/40">
                             <div className="overflow-x-auto">
-                                <table className="min-w-full divide-y divide-slate-800">
+                                <table id="review-table" className="min-w-full divide-y divide-slate-800">
                                     <thead>
                                         <tr className="bg-slate-950/50">
                                             <th className="px-6 py-4 text-left w-10">

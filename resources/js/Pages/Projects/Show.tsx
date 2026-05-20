@@ -82,12 +82,12 @@ export default function Show({ project, stats }: Props) {
                         </Typography>
                     </div>
                     <div className="flex gap-3">
-                        <Link href={route('projects.crawl-jobs.create', project.id)}>
+                        <Link id="execute-crawl-btn" href={route('projects.crawl-jobs.create', project.id)}>
                             <Button icon={<Play className="h-4 w-4" />}>
                                 {t('messages.execute_now')}
                             </Button>
                         </Link>
-                        <Link href={route('projects.edit', project.id)}>
+                        <Link id="project-config-btn" href={route('projects.edit', project.id)}>
                             <Button variant="secondary" icon={<Settings className="h-4 w-4" />}>
                                 {t('messages.configuration')}
                             </Button>
@@ -99,7 +99,7 @@ export default function Show({ project, stats }: Props) {
             <Head title={project.name} />
 
             {/* Tabs Navigation */}
-            <div className="mb-8 flex items-center gap-1 rounded-2xl bg-white p-1.5 shadow-sm dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+            <div id="project-tabs" className="mb-8 flex items-center gap-1 rounded-2xl bg-white p-1.5 shadow-sm dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
                 {tabs.map((tab) => (
                     <button
                         key={tab.id}

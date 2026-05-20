@@ -11,7 +11,7 @@ Este roadmap prioriza entregas que geram valor com menor esforço técnico.
 | 1 | Corrigir divergências do README e manter docs atualizadas | Reduz confusão para novas LLMs/devs | Baixo |
 | 2 | Adicionar testes dos services principais | Valida crawler, normalização, escopo, limpeza e exportação | Baixo |
 | 3 | Documentar variáveis `.env` necessárias | Facilita setup local | Baixo |
-| 4 | Criar seed/demo opcional | Ajuda validação manual rápida | Baixo |
+| 4 | [CONCLUÍDO] Criar seed/demo opcional | Ajuda validação manual rápida | Baixo |
 
 ## Fase 2 — MVP SaaS
 
@@ -26,10 +26,10 @@ Este roadmap prioriza entregas que geram valor com menor esforço técnico.
 
 | Prioridade | Tarefa | Motivo | Custo |
 |---|---|---|---|
-| 1 | Versionar exports JSONL | Torna datasets reproduzíveis | Médio |
+| 1 | [CONCLUÍDO] Versionar exports JSONL | Torna datasets reproduzíveis | Médio |
 | 2 | Permitir parâmetros de chunking por projeto | Aproveita `SimpleChunker` | Médio |
 | 3 | Adicionar filtros de exportação | Evita exportar tudo sempre | Médio |
-| 4 | Registrar metadados do dataset exportado | Melhora rastreabilidade | Baixo |
+| 4 | [CONCLUÍDO] Registrar metadados do dataset exportado | Melhora rastreabilidade | Baixo |
 
 ## Fase 4 — Revisão e Qualidade
 
@@ -38,7 +38,7 @@ Este roadmap prioriza entregas que geram valor com menor esforço técnico.
 | 1 | Adicionar status de revisão em documentos | Base para aprovação antes do export | Médio |
 | 2 | Criar tela simples de aprovação/reprovação | Valor direto para qualidade | Médio |
 | 3 | Exibir duplicados e falhas de coleta | Usa dados já persistidos | Baixo |
-| 4 | Adicionar score de qualidade real | Campo existe, regra não identificada | Médio |
+| 4 | [CONCLUÍDO] Adicionar score de qualidade real | Integração completa com APIs de LLM (Gemini e OpenAI) e fallback heurístico | Médio |
 
 ## Fase 5 — Extensão do Navegador
 
@@ -53,7 +53,8 @@ Este roadmap prioriza entregas que geram valor com menor esforço técnico.
 
 | Prioridade | Tarefa | Motivo | Custo |
 |---|---|---|---|
-| 1 | Criar organizações e memberships | Necessário para SaaS multiusuário real | Alto |
-| 2 | Adicionar auditoria | Necessário para operação SaaS | Médio |
-| 3 | Implementar robots.txt/rate limit/retries | Reduz risco operacional do crawler | Médio |
-| 4 | Integrar LLM para classificação/enriquecimento | Valor futuro, depende de dataset confiável | Alto |
+| 1 | [CONCLUÍDO] Criar organizações e memberships | Necessário para SaaS multiusuário real | Alto |
+| 2 | [CONCLUÍDO] Adicionar auditoria | Necessário para operação SaaS | Médio |
+| 3 | [CONCLUÍDO] Implementar robots.txt/rate limit/retries | Reduz risco operacional do crawler | Médio |
+| 4 | [CONCLUÍDO] Implementar faturamento Stripe e limites de uso | Monetização da plataforma SaaS | Alto |
+| 5 | Integrar LLM para classificação/enriquecimento | Valor futuro, depende de dataset confiável | Alto |

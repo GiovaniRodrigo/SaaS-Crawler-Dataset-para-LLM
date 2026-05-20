@@ -98,7 +98,7 @@ export default function Features() {
                 <div className="mx-auto max-w-4xl px-6">
                     <Card className="border-slate-800 bg-slate-950 p-12 overflow-hidden relative">
                         <div className="absolute top-0 right-0 p-8 opacity-10"><Zap className="h-32 w-32 text-cyan-500" /></div>
-                        <Typography variant="h2" className="text-3xl font-bold mb-8">Por que escolher o DataCrawl?</Typography>
+                        <Typography variant="h2" className="text-3xl font-bold mb-8">Por que escolher o CrawlMind?</Typography>
                         <div className="space-y-4 text-left">
                             {[
                                 'Foco exclusivo em datasets para LLM e RAG.',

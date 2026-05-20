@@ -3,8 +3,9 @@
 namespace App\Services\Quality;
 
 use App\Models\Document;
+use App\Contracts\AI\QualityScorerInterface;
 
-class QualityScorer
+class QualityScorer implements QualityScorerInterface
 {
     /**
      * Calcula um score de qualidade de 0 a 100 para um documento.

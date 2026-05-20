@@ -47,4 +47,12 @@ class User extends Authenticatable
     {
         return $this->organizations()->first();
     }
+
+    public function belongsToOrganization(?int $organizationId): bool
+    {
+        if (!$organizationId) {
+            return false;
+        }
+        return $this->organizations()->where('organization_id', $organizationId)->exists();
+    }
 }

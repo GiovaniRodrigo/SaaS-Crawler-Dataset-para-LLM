@@ -34,6 +34,12 @@ class ProjectController extends Controller
     {
         $organization = $request->get('current_organization');
 
+        if ($organization && $organization->hasReachedProjectLimit()) {
+            return redirect()->back()->withInput()->withErrors([
+                'name' => 'Limite de projetos atingido para o plano ' . ucfirst($organization->subscription_plan) . '. Faça o upgrade do plano para criar mais projetos.'
+            ]);
+        }
+
         $project = $action->execute(
             $request->user(), 
             $request->validated(),

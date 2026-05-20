@@ -13,7 +13,11 @@ class ExtensionCaptureController extends Controller
 {
     public function projects(Request $request)
     {
-        $projects = $request->user()->projects()->select('id', 'name')->get();
+        $organization = $request->user()->currentOrganization();
+        if (!$organization) {
+            return response()->json([]);
+        }
+        $projects = $organization->projects()->select('id', 'name')->get();
         return response()->json($projects);
     }
 
@@ -23,10 +27,16 @@ class ExtensionCaptureController extends Controller
         CreateDocumentFromCrawledPageAction $createDocumentAction
     ) {
         $project = Project::findOrFail($request->project_id);
+        $organization = $request->user()->currentOrganization();
         
-        // Authorize project belongs to user
-        if ($project->user_id !== $request->user()->id) {
-            return response()->json(['message' => 'Unauthorized'], 403);
+        // Authorize project belongs to user's active organization
+        if (!$organization || $project->organization_id !== $organization->id) {
+            return response()->json(['message' => 'Unauthorized or project does not belong to active organization'], 403);
+        }
+
+        // Check if organization has reached its page limit
+        if ($organization->hasReachedPageLimit()) {
+            return response()->json(['message' => 'Limite de páginas atingido para o plano ' . ucfirst($organization->subscription_plan) . '. Faça o upgrade de plano.'], 403);
         }
 
         // Validate domain

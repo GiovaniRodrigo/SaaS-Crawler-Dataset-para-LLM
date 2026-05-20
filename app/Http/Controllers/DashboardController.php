@@ -6,6 +6,7 @@ use App\Models\Project;
 use App\Models\Document;
 use App\Models\Chunk;
 use App\Models\CrawlJob;
+use App\Models\AuditLog;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -43,22 +44,33 @@ class DashboardController extends Controller
 
     private function getRecentActivities($projectIds)
     {
-        // Por enquanto, pegamos os últimos documentos criados como "atividade"
-        return Document::whereIn('project_id', $projectIds)
-            ->with('project')
+        return AuditLog::whereIn('project_id', $projectIds)
+            ->with(['user', 'project'])
             ->latest()
             ->take(5)
             ->get()
-            ->map(function($doc) {
+            ->map(function($log) {
                 return [
-                    'id' => $doc->id,
-                    'user' => 'Sistema', // Simplificado
-                    'action' => 'Documento extraído',
-                    'project' => $doc->project->name,
-                    'time' => $doc->created_at->diffForHumans(),
-                    'type' => 'job'
+                    'id' => $log->id,
+                    'user' => $log->user?->name ?? 'Sistema',
+                    'action' => $log->description,
+                    'project' => $log->project?->name ?? 'Geral',
+                    'time' => $log->created_at->diffForHumans(),
+                    'type' => $this->getActivityType($log->action)
                 ];
             });
+    }
+
+    private function getActivityType(string $action): string
+    {
+        $actionLower = strtolower($action);
+        if (str_contains($actionLower, 'crawl') || str_contains($actionLower, 'job')) {
+            return 'job';
+        }
+        if (str_contains($actionLower, 'document') || str_contains($actionLower, 'chunk') || str_contains($actionLower, 'capture')) {
+            return 'document';
+        }
+        return 'project';
     }
 
     public function downloadExtension()

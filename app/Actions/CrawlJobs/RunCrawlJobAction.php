@@ -32,6 +32,13 @@ class RunCrawlJobAction
         try {
             $this->markAsRunningAction->execute($job);
 
+            $organization = $job->project->organization;
+            if ($organization && $organization->hasReachedPageLimit()) {
+                Log::warning("Crawl job {$job->id} cancelado: limite de páginas do plano atingido para a organização.");
+                $this->markAsCompletedAction->execute($job);
+                return;
+            }
+
             // Initialize queue with seed URLs
             foreach ($job->seed_urls as $url) {
                 $normalized = $this->urlNormalizer->normalize($url);
@@ -43,6 +50,11 @@ class RunCrawlJobAction
             $pagesCrawled = 0;
 
             while (!empty($this->queue) && $pagesCrawled < $job->max_pages) {
+                if ($organization && $organization->hasReachedPageLimit()) {
+                    Log::warning("Crawl job {$job->id} interrompido: limite de páginas do plano atingido durante a execução.");
+                    break;
+                }
+
                 $current = array_shift($this->queue);
                 $url = $current['url'];
                 $depth = $current['depth'];
@@ -53,6 +65,16 @@ class RunCrawlJobAction
 
                 $this->visited[$url] = true;
                 $pagesCrawled++;
+
+                // Apply politeness delay (between 0.1 and 10 seconds)
+                if ($pagesCrawled > 1) {
+                    $delay = 1.0;
+                    if (method_exists($this->scopeValidator, 'getCrawlDelay')) {
+                        $delay = $this->scopeValidator->getCrawlDelay($url);
+                    }
+                    $delay = min(10.0, max(0.1, $delay));
+                    usleep((int)($delay * 1000000));
+                }
 
                 $fetchResult = $this->fetcher->fetch($url);
                 
@@ -99,15 +121,25 @@ class RunCrawlJobAction
 
     protected function extractLinks(string $html, string $baseUrl): array
     {
-        $links = [];
-        preg_match_all('/<a\s+[^>]*?href=["\']([^"\']+)["\']/i', $html, $matches);
+        if (empty($html)) {
+            return [];
+        }
+
+        $dom = new \DOMDocument();
+        @$dom->loadHTML('<?xml encoding="UTF-8">' . $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         
-        if (isset($matches[1])) {
-            foreach ($matches[1] as $link) {
-                // Basic cleanup
-                $link = strtok($link, '#');
-                if (!empty($link) && !str_starts_with($link, 'javascript:') && !str_starts_with($link, 'mailto:')) {
-                    $links[] = $link;
+        $links = [];
+        $anchors = $dom->getElementsByTagName('a');
+        foreach ($anchors as $anchor) {
+            $href = $anchor->getAttribute('href');
+            if ($href) {
+                $href = strtok($href, '#');
+                $href = trim($href);
+                if ($href !== '' && 
+                    !str_starts_with($href, 'javascript:') && 
+                    !str_starts_with($href, 'mailto:') && 
+                    !str_starts_with($href, 'tel:')) {
+                    $links[] = $href;
                 }
             }
         }

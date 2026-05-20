@@ -15,8 +15,36 @@ class HandleOrganizationContext
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // Se houver invite_token na requisição (query ou post), armazena na sessão
+        if ($request->has('invite_token')) {
+            session(['invite_token' => $request->input('invite_token')]);
+        }
+
         if ($request->user()) {
-            $organization = $request->user()->currentOrganization();
+            // Processar convite pendente na sessão pós-autenticação
+            if (session()->has('invite_token')) {
+                $token = session()->pull('invite_token');
+                $invitation = \App\Models\OrganizationInvitation::where('token', $token)->first();
+                if ($invitation) {
+                    if (!$request->user()->belongsToOrganization($invitation->organization_id)) {
+                        $invitation->organization->users()->attach($request->user()->id, ['role' => $invitation->role]);
+                    }
+                    session(['current_organization_id' => $invitation->organization_id]);
+                    $invitation->delete();
+                }
+            }
+
+            // Priorizar a organização armazenada na sessão
+            $organization = null;
+            if (session()->has('current_organization_id')) {
+                $organization = $request->user()->organizations()
+                    ->where('organizations.id', session('current_organization_id'))
+                    ->first();
+            }
+
+            if (!$organization) {
+                $organization = $request->user()->currentOrganization();
+            }
 
             // Se não tiver organização, cria uma padrão para manter o sistema funcionando
             if (!$organization) {

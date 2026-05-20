@@ -13,7 +13,7 @@ class SimpleWebPageFetcher implements WebPageFetcherInterface
         try {
             $response = Http::timeout(30)
                 ->withHeaders([
-                    'User-Agent' => 'Mozilla/5.0 (compatible; DataCrawlBot/1.0; +https://datacrawl.com.br/bot)'
+                    'User-Agent' => 'Mozilla/5.0 (compatible; CrawlMindBot/1.0; +https://crawlmind.com/bot)'
                 ])
                 ->get($url);
             

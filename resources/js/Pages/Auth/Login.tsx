@@ -30,7 +30,7 @@ export default function Login({
 
     return (
         <div className="flex min-h-screen bg-slate-950 text-slate-100">
-            <Head title="Entrar no DataCrawl" />
+            <Head title="Entrar no CrawlMind" />
 
             {/* Lado Esquerdo - Institucional */}
             <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-indigo-600 p-16 flex-col justify-between">
@@ -39,7 +39,7 @@ export default function Login({
                         <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-indigo-600 shadow-lg">
                             <Activity className="h-6 w-6" />
                         </div>
-                        <span className="text-2xl font-bold tracking-tight text-white">DataCrawl</span>
+                        <span className="text-2xl font-bold tracking-tight text-white">CrawlMind</span>
                     </Link>
 
                     <div className="mt-24 space-y-6 max-w-lg">
@@ -77,7 +77,7 @@ export default function Login({
 
                 <div className="relative z-10">
                     <Typography variant="caption" className="text-indigo-200">
-                        © 2026 DataCrawl. Ferramenta profissional para engenharia de dados de IA.
+                        © 2026 CrawlMind. Ferramenta profissional para engenharia de dados de IA.
                     </Typography>
                 </div>
             </div>
@@ -90,7 +90,7 @@ export default function Login({
                             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-lg">
                                 <Activity className="h-6 w-6" />
                             </div>
-                            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">DataCrawl</span>
+                            <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">CrawlMind</span>
                         </Link>
                     </div>
 
