@@ -24,9 +24,9 @@ export default function Topbar() {
                 {/* Organization Switcher (Placeholder for now) */}
                 <div id="org-selector" className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                     <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-cyan-500 text-white shadow-lg shadow-cyan-500/20">
-                        <span className="text-[10px] font-bold">{auth.organization.name.substring(0, 1)}</span>
+                        <span className="text-[10px] font-bold">{auth.organization?.name?.substring(0, 1) || 'O'}</span>
                     </div>
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{auth.organization.name}</span>
+                    <span className="text-xs font-bold text-slate-700 dark:text-slate-200">{auth.organization?.name || 'Carregando...'}</span>
                 </div>
 
                 <div id="global-search" className="flex w-72 items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-slate-400 dark:border-slate-800 dark:bg-slate-950/50">
@@ -60,7 +60,7 @@ export default function Topbar() {
                 </Dropdown>
 
                 <div className="flex items-center gap-2">
-                    <Badge variant="indigo" className="px-3">PRO PLAN</Badge>
+                    <Badge variant="indigo" className="px-3">{(auth.organization?.subscription_plan || 'PLAN').toUpperCase()} PLAN</Badge>
                     <Typography variant="caption" className="text-[10px] text-slate-400">
                         8.2k / 20k páginas
                     </Typography>
@@ -100,10 +100,34 @@ export default function Topbar() {
                         </Dropdown.Content>
                     </Dropdown>
 
-                    <button className="relative rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800">
-                        <Bell className="h-5 w-5" />
-                        <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-slate-900" />
-                    </button>
+                    <Dropdown>
+                        <Dropdown.Trigger>
+                            <button className="relative rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800">
+                                <Bell className="h-5 w-5" />
+                                {auth.notifications?.length > 0 && (
+                                    <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-slate-900" />
+                                )}
+                            </button>
+                        </Dropdown.Trigger>
+                        <Dropdown.Content>
+                            <div className="px-4 py-2 border-b border-slate-100 dark:border-slate-800">
+                                <Typography variant="caption" className="font-black text-slate-400 uppercase">Notificações</Typography>
+                            </div>
+                            {auth.notifications?.length > 0 ? (
+                                auth.notifications.map((notif: any) => (
+                                    <div key={notif.id} className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <Typography variant="small" className="font-bold text-slate-900 dark:text-slate-100">
+                                            {notif.data.message}
+                                        </Typography>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="px-4 py-6 text-center text-slate-500 text-xs font-bold">
+                                    Nenhuma notificação nova.
+                                </div>
+                            )}
+                        </Dropdown.Content>
+                    </Dropdown>
 
                     <div className="h-8 w-px bg-slate-200 dark:bg-slate-800" />
 

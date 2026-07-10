@@ -16,7 +16,12 @@
         Permissions-Policy "geolocation=(), microphone=(), camera=()"
     }
 
-    # Reverse proxy to the Laravel application
-    # Assuming the app container is named 'app' and listening on port 8000
-    reverse_proxy app:8000
+    # Define the document root
+    root * /var/www/public
+
+    # FastCGI proxy to PHP-FPM container
+    php_fastcgi app:9000
+
+    # Serve static files directly
+    file_server
 }

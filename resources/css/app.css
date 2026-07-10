@@ -2,13 +2,13 @@
 
 @layer base {
     :root {
-        --background: #f8fafc;
-        --foreground: #020617;
+        --background: #ffffff;
+        --foreground: #000000;
     }
 
     .dark {
-        --background: #020617;
-        --foreground: #f8fafc;
+        --background: #000000;
+        --foreground: #ffffff;
     }
 }
 
@@ -19,49 +19,45 @@
 }
 
 body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased selection:bg-cyan-400 selection:text-black;
 }
 
-/* Custom scrollbar for better SaaS look */
+/* Custom scrollbar for better SaaS look and high contrast */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
+    @apply bg-slate-100 dark:bg-slate-900;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-slate-200 dark:bg-slate-800;
+    @apply rounded-full bg-slate-400 dark:bg-slate-600 border-2 border-slate-100 dark:border-slate-900;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-slate-300 dark:bg-slate-700;
+    @apply bg-slate-500 dark:bg-slate-500;
 }
 
-/* Driver.js Custom Styling (Shadcn/M3 Mix) */
+/* Driver.js Custom Styling (High Contrast M3) */
 .driver-popover {
-    @apply !rounded-3xl !bg-slate-900 !border !border-slate-800 !shadow-2xl !p-6 !max-w-xs;
+    @apply !rounded-3xl !bg-white dark:!bg-slate-950 !border-2 !border-slate-950 dark:!border-slate-50 !shadow-2xl !p-6 !max-w-xs;
 }
 
 .driver-popover-title {
-    @apply !text-lg !font-bold !text-white !mb-2 !font-sans;
+    @apply !text-xl !font-black !text-slate-950 dark:!text-slate-50 !mb-2 !font-sans;
 }
 
 .driver-popover-description {
-    @apply !text-sm !text-slate-400 !leading-relaxed;
-}
-
-.driver-popover-next-btn, .driver-popover-prev-btn, .driver-popover-close-btn {
-    @apply !rounded-xl !text-xs !font-bold !px-4 !py-2 !transition-all !border-none;
+    @apply !text-sm !font-medium !text-slate-800 dark:!text-slate-200 !leading-relaxed;
 }
 
 .driver-popover-next-btn {
-    @apply !bg-cyan-500 !text-white hover:!bg-cyan-400 !shadow-lg !shadow-cyan-500/20;
+    @apply !bg-slate-950 dark:!bg-slate-50 !text-white dark:!text-slate-950 !rounded-xl !text-xs !font-black !px-4 !py-2 !transition-all !border-2 !border-slate-950 dark:!border-slate-50;
 }
 
 .driver-popover-prev-btn {
-    @apply !bg-slate-800 !text-slate-300 hover:!bg-slate-700;
+    @apply !bg-white dark:!bg-slate-950 !text-slate-950 dark:!text-slate-50 !rounded-xl !text-xs !font-black !px-4 !py-2 !transition-all !border-2 !border-slate-950 dark:!border-slate-50;
 }
 
 .driver-popover-progress-text {

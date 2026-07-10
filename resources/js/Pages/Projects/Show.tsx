@@ -71,11 +71,11 @@ export default function Show({ project, stats }: Props) {
                 <div className="flex items-center justify-between">
                     <div>
                         <div className="flex items-center gap-2">
-                            <Link href={route('projects.index')} className="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+                            <Link href={route('projects.index')} className="text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors">
                                 <Typography variant="caption">{t('messages.projects')}</Typography>
                             </Link>
                             <ChevronRight className="h-3 w-3 text-slate-300" />
-                            <Badge variant="indigo">SaaS Crawler</Badge>
+                            <Badge variant="cyan">SaaS Crawler</Badge>
                         </div>
                         <Typography variant="h1" className="mt-1 font-bold text-slate-900 dark:text-white">
                             {project.name}
@@ -105,13 +105,13 @@ export default function Show({ project, stats }: Props) {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id)}
                         className={cn(
-                            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-medium transition-all duration-200',
+                            'flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-black transition-all duration-200',
                             activeTab === tab.id
-                                ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
-                                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100'
+                                ? 'bg-cyan-400 text-black shadow-lg shadow-cyan-500/25 border-2 border-black'
+                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-50'
                         )}
                     >
-                        <tab.icon className={cn('h-4 w-4', activeTab === tab.id ? 'text-white' : 'text-slate-400')} />
+                        <tab.icon className={cn('h-4 w-4', activeTab === tab.id ? 'text-black' : 'text-slate-500')} />
                         {tab.label}
                     </button>
                 ))}
@@ -132,48 +132,54 @@ export default function Show({ project, stats }: Props) {
                                 value={stats.total_chunks} 
                                 icon={<Braces className="h-6 w-6" />}
                             />
-                            <Card className="flex flex-col justify-center">
-                                <Typography variant="caption" className="text-slate-500">Qualidade do Dataset</Typography>
+                            <Card className="flex flex-col justify-center border-2 border-emerald-500/30">
+                                <Typography variant="caption" className="text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px]">Qualidade do Dataset</Typography>
                                 <div className="mt-2 flex items-center gap-3">
-                                    <Typography variant="h2" className="font-bold text-emerald-600 dark:text-emerald-400">87%</Typography>
+                                    <Typography variant="h2" className="font-black text-emerald-600 dark:text-emerald-400 tracking-tight">87%</Typography>
                                     <Badge variant="emerald">Excelente</Badge>
                                 </div>
                             </Card>
                         </div>
                         
                         <Card>
-                            <Typography variant="h3" className="font-bold mb-4">{t('messages.project_summary')}</Typography>
-                            <Typography variant="body" className="text-slate-600 dark:text-slate-400">
+                            <Typography variant="h3" className="font-black mb-4 text-slate-950 dark:text-slate-50">{t('messages.project_summary')}</Typography>
+                            <Typography variant="body" className="text-slate-800 dark:text-slate-200 leading-relaxed">
                                 {project.description || t('messages.no_description')}
                             </Typography>
                             
-                            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-slate-100 dark:border-slate-800">
+                            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t-2 border-slate-100 dark:border-slate-800">
                                 <div>
-                                    <Typography variant="caption" className="text-slate-400">{t('messages.current_scope')}</Typography>
-                                    <div className="mt-4 space-y-3">
-                                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                                            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                    <Typography variant="caption" className="text-slate-900 dark:text-slate-100 font-black mb-4 block">{t('messages.current_scope')}</Typography>
+                                    <div className="mt-4 space-y-4">
+                                        <div className="flex items-center gap-3 text-sm font-bold text-slate-800 dark:text-slate-200">
+                                            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
                                             {t('messages.authorized_domains_count', { count: String(project.domains?.length || 0) })}
                                         </div>
-                                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                                            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                        <div className="flex items-center gap-3 text-sm font-bold text-slate-800 dark:text-slate-200">
+                                            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
                                             {t('messages.sensitive_filter_active')}
                                         </div>
-                                        <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                                            <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                                        <div className="flex items-center gap-3 text-sm font-bold text-slate-800 dark:text-slate-200">
+                                            <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                                            </div>
                                             {t('messages.deduplication_active')}
                                         </div>
                                     </div>
                                 </div>
                                 <div>
-                                    <Typography variant="caption" className="text-slate-400">{t('messages.last_activity')}</Typography>
-                                    <div className="mt-4 flex items-center gap-3">
-                                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500">
-                                            <Play className="h-5 w-5" />
+                                    <Typography variant="caption" className="text-slate-900 dark:text-slate-100 font-black mb-4 block">{t('messages.last_activity')}</Typography>
+                                    <div className="mt-4 flex items-center gap-4">
+                                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white dark:bg-black border-2 border-slate-950 dark:border-slate-50 text-slate-950 dark:text-slate-50 shadow-sm">
+                                            <Play className="h-6 w-6" />
                                         </div>
                                         <div>
-                                            <Typography variant="small" className="font-bold">{t('messages.crawler_finished')}</Typography>
-                                            <Typography variant="caption" className="text-slate-500">
+                                            <Typography variant="body" className="font-black text-slate-950 dark:text-slate-50">{t('messages.crawler_finished')}</Typography>
+                                            <Typography variant="small" className="text-slate-600 dark:text-slate-400 font-bold">
                                                 {t('messages.new_pages_count', { time: '2 dias', count: '1.2k' })}
                                             </Typography>
                                         </div>
@@ -349,7 +355,7 @@ function DomainSection({ project }: { project: Project }) {
                             value={data.domain}
                             onChange={(e) => setData('domain', e.target.value)}
                             className={cn(
-                                'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm transition-all focus:border-indigo-600 focus:ring-4 focus:ring-indigo-600/10 dark:border-slate-800 dark:bg-slate-950 dark:focus:border-indigo-500',
+                                'w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm transition-all focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 dark:border-slate-800 dark:bg-slate-950 dark:focus:border-primary-500',
                                 errors.domain && 'border-rose-500 focus:border-rose-500 focus:ring-rose-500/10'
                             )}
                         />
@@ -361,7 +367,7 @@ function DomainSection({ project }: { project: Project }) {
                             id="allow_subdomains"
                             checked={data.allow_subdomains}
                             onChange={(e) => setData('allow_subdomains', e.target.checked)}
-                            className="h-5 w-5 rounded-lg border-slate-300 text-indigo-600 focus:ring-indigo-600 dark:border-slate-700 dark:bg-slate-950"
+                            className="h-5 w-5 rounded-lg border-slate-300 text-primary-500 focus:ring-primary-500 dark:border-slate-700 dark:bg-slate-950"
                         />
                         <label htmlFor="allow_subdomains" className="text-sm font-medium text-slate-700 dark:text-slate-300 cursor-pointer">
                             {t('messages.allow_subdomains')}
@@ -399,7 +405,7 @@ function DomainSection({ project }: { project: Project }) {
                                     <tr key={domain.id} className="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">{domain.domain}</td>
                                         <td className="px-6 py-4">
-                                            <Badge variant={domain.allow_subdomains ? 'indigo' : 'slate'}>
+                                            <Badge variant={domain.allow_subdomains ? 'cyan' : 'slate'}>
                                                 {domain.allow_subdomains ? t('messages.domain_plus_subdomains') : t('messages.only_domain')}
                                             </Badge>
                                         </td>
@@ -479,7 +485,7 @@ function JobSection({ project }: { project: Project }) {
                                             </Typography>
                                             <div className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
                                                 <div 
-                                                    className="h-full bg-indigo-600" 
+                                                    className="h-full bg-primary-500" 
                                                     style={{ width: `${(job.total_crawled / job.max_pages) * 100}%` }} 
                                                 />
                                             </div>
@@ -546,7 +552,7 @@ function ExportSection({ project }: { project: Project }) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="group relative overflow-hidden">
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400">
                     <FileText className="h-6 w-6" />
                 </div>
                 <Typography variant="h3" className="font-bold">Documents JSONL</Typography>
@@ -554,18 +560,18 @@ function ExportSection({ project }: { project: Project }) {
                     Dataset completo contendo o texto limpo e metadados de todas as páginas coletadas.
                 </Typography>
                 <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
-                    <a href={route('projects.exports.documents', project.id)} target="_blank">
+                    <a href={route('projects.exports.documents', project.id)}>
                         <Button className="w-full" icon={<Download className="h-4 w-4" />}>
                             Baixar JSONL de Documentos
                         </Button>
                     </a>
                 </div>
                 {/* Background glow */}
-                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-indigo-500/5 blur-3xl" />
+                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-cyan-500/5 blur-3xl" />
             </Card>
 
-            <Card className="group relative overflow-hidden border-indigo-600/20 dark:border-indigo-500/20 shadow-indigo-500/5">
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-600/30">
+            <Card className="group relative overflow-hidden border-cyan-500/20 dark:border-cyan-500/20 shadow-cyan-500/5">
+                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-50 text-slate-950 shadow-lg shadow-cyan-500/30">
                     <Braces className="h-6 w-6" />
                 </div>
                 <Typography variant="h3" className="font-bold">Chunks JSONL</Typography>
@@ -573,14 +579,14 @@ function ExportSection({ project }: { project: Project }) {
                     Dataset segmentado em fragmentos menores (chunks) com overlap, ideal para RAG e Fine-tuning.
                 </Typography>
                 <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
-                    <a href={route('projects.exports.chunks', project.id)} target="_blank">
+                    <a href={route('projects.exports.chunks', project.id)}>
                         <Button className="w-full" icon={<Download className="h-4 w-4" />}>
                             Baixar JSONL de Chunks
                         </Button>
                     </a>
                 </div>
                 {/* Background glow */}
-                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-indigo-500/10 blur-3xl" />
+                <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-cyan-500/10 blur-3xl" />
             </Card>
         </div>
     );

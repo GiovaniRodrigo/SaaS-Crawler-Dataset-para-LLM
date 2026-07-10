@@ -18,7 +18,7 @@ class CrawlJobController extends Controller
         $jobs = CrawlJob::whereIn('project_id', $request->user()->projects()->pluck('id'))
             ->with('project')
             ->latest()
-            ->paginate(10);
+            ->paginate(15);
 
         return Inertia::render('CrawlJobs/Index', [
             'jobs' => $jobs
@@ -49,6 +49,56 @@ class CrawlJobController extends Controller
 
         return Inertia::render('CrawlJobs/Show', [
             'crawlJob' => $crawlJob->load('project'),
+        ]);
+    }
+
+    public function failures(CrawlJob $crawlJob)
+    {
+        $this->authorize('view', $crawlJob);
+
+        $failures = $crawlJob->crawledPages()
+            ->where(function ($query) {
+                $query->where('status_code', 0)
+                      ->orWhere('status_code', '>=', 400);
+            })
+            ->latest()
+            ->paginate(20);
+
+        return Inertia::render('CrawlJobs/Failures', [
+            'crawlJob' => $crawlJob->load('project'),
+            'failures' => $failures
+        ]);
+    }
+
+    public function crawledPages(CrawlJob $crawlJob)
+    {
+        $this->authorize('view', $crawlJob);
+
+        $pages = $crawlJob->crawledPages()
+            ->where('status_code', '>=', 200)
+            ->where('status_code', '<', 300)
+            ->latest()
+            ->paginate(20);
+
+        return Inertia::render('CrawlJobs/CrawledPages', [
+            'crawlJob' => $crawlJob->load('project'),
+            'pages' => $pages
+        ]);
+    }
+
+    public function discoveredPages(CrawlJob $crawlJob)
+    {
+        $this->authorize('view', $crawlJob);
+
+        // Discovered pages are conceptually the URLs found but not yet crawled or that didn't fail yet.
+        // For simplicity and high contrast feedback, we will show all pages found in this job context.
+        $pages = $crawlJob->crawledPages()
+            ->latest()
+            ->paginate(20);
+
+        return Inertia::render('CrawlJobs/DiscoveredPages', [
+            'crawlJob' => $crawlJob->load('project'),
+            'pages' => $pages
         ]);
     }
 

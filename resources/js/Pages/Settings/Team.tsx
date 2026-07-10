@@ -166,12 +166,14 @@ export default function Team({ organization, members, invitations }: Props) {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         {member.id !== auth.user.id && (
-                                            <button 
+                                            <Button 
+                                                variant="ghost"
+                                                size="icon"
                                                 onClick={() => removeMember(member.id)}
-                                                className="text-slate-600 hover:text-rose-500 transition-colors p-2"
+                                                className="hover:text-rose-500 text-slate-400"
                                             >
                                                 <Trash2 className="h-5 w-5" />
-                                            </button>
+                                            </Button>
                                         )}
                                         {member.id === auth.user.id && (
                                             <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest px-2">Você</span>

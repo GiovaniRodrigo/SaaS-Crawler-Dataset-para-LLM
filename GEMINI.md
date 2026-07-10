@@ -10,6 +10,7 @@ Contexto principal:
 
 Skills locais:
 
+- `.agents/skills/atomic-design/SKILL.md`
 - `.agents/skills/laravel-inertia/SKILL.md`
 - `.agents/skills/crawler-dataset/SKILL.md`
 - `.agents/skills/browser-extension/SKILL.md`

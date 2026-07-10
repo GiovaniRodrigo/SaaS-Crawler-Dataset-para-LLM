@@ -17,7 +17,7 @@ class RunCrawlJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public CrawlJob $job)
+    public function __construct(public CrawlJob $crawlJob)
     {
         //
     }
@@ -27,6 +27,6 @@ class RunCrawlJob implements ShouldQueue
      */
     public function handle(RunCrawlJobAction $action): void
     {
-        $action->execute($this->job);
+        $action->execute($this->crawlJob);
     }
 }

@@ -25,8 +25,9 @@ export default function Card({
 
     return (
         <div className={cn(
-            'overflow-hidden rounded-3xl border bg-white shadow-sm transition-all',
-            'dark:bg-slate-900/60 dark:backdrop-blur-xl dark:border-slate-800/50 dark:shadow-black/20',
+            'overflow-hidden rounded-3xl border shadow-sm transition-all',
+            'bg-white border-slate-200 shadow-slate-200/50',
+            'dark:bg-slate-950 dark:border-slate-800 dark:shadow-black/50',
             paddings[padding],
             className
         )}>

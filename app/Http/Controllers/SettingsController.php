@@ -12,8 +12,11 @@ use App\Models\DatasetExport;
 
 class SettingsController extends Controller
 {
-    public function reports()
+    public function reports(Request $request)
     {
+        $period = $request->query('period', 7); // Default to 7 days
+        $period = in_array((int)$period, [7, 15, 30]) ? (int)$period : 7;
+
         $totalProjects = Project::count();
         $totalDocuments = Document::count();
         $totalChunks = Chunk::count();
@@ -39,7 +42,7 @@ class SettingsController extends Controller
                 \Illuminate\Support\Facades\DB::raw('date(created_at) as date'),
                 \Illuminate\Support\Facades\DB::raw('count(*) as count')
             )
-            ->where('created_at', '>=', now()->subDays(7))
+            ->where('created_at', '>=', now()->subDays($period))
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get()
@@ -52,7 +55,7 @@ class SettingsController extends Controller
             ->toArray();
 
         $historyMap = [];
-        for ($i = 6; $i >= 0; $i--) {
+        for ($i = $period - 1; $i >= 0; $i--) {
             $dateStr = now()->subDays($i)->format('d/m');
             $historyMap[$dateStr] = 0;
         }
@@ -105,6 +108,7 @@ class SettingsController extends Controller
             ],
             'chartData' => $chartData,
             'topDomains' => $topDomains,
+            'currentPeriod' => $period,
         ]);
     }
 
@@ -156,12 +160,40 @@ class SettingsController extends Controller
         ]);
     }
 
-    public function general()
+    public function general(Request $request)
     {
-        return Inertia::render('Settings/Placeholder', [
-            'title' => 'Configurações Gerais',
-            'description' => 'Ajuste as preferências da sua organização, membros da equipe e chaves de API globais.'
+        $organization = $request->user()->currentOrganization();
+        
+        return Inertia::render('Settings/General', [
+            'organization' => $organization
         ]);
+    }
+
+    public function updateGeneral(Request $request, \App\Actions\Audit\LogAuditAction $logAudit)
+    {
+        $organization = $request->user()->currentOrganization();
+        
+        if (!$organization || $organization->owner_id !== $request->user()->id) {
+            abort(403, 'Apenas o dono da organização pode alterar estas configurações.');
+        }
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $oldName = $organization->name;
+        $organization->update([
+            'name' => $validated['name'],
+        ]);
+
+        if ($oldName !== $validated['name']) {
+            $logAudit->execute(
+                'organization_updated',
+                "Organização renomeada de '{$oldName}' para '{$validated['name']}'."
+            );
+        }
+
+        return back()->with('success', 'Configurações gerais atualizadas com sucesso.');
     }
 
     public function datasets()

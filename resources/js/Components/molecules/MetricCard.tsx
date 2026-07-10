@@ -46,7 +46,7 @@ export default function MetricCard({
                     )}
                 </div>
                 {icon && (
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 border border-slate-800 text-cyan-500 shadow-inner group-hover:scale-110 transition-transform duration-500">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white dark:bg-black border-2 border-slate-950 dark:border-slate-50 text-cyan-600 dark:text-cyan-400 shadow-sm group-hover:scale-110 transition-transform duration-500">
                         {icon}
                     </div>
                 )}

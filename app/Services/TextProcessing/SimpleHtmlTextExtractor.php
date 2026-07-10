@@ -62,6 +62,21 @@ class SimpleHtmlTextExtractor implements HtmlTextExtractorInterface
             return $node->textContent;
         }
 
+        $nodeName = strtolower($node->nodeName);
+
+        // Handle code blocks
+        if ($nodeName === 'pre' || $nodeName === 'code') {
+            $codeText = trim($node->textContent);
+            if (empty($codeText)) return "";
+            
+            // If it's a pre tag, it likely contains a block of code
+            if ($nodeName === 'pre') {
+                return "\n```\n" . $codeText . "\n```\n";
+            }
+            // If it's just code tag (inline), wrap with single backticks
+            return "`" . $codeText . "`";
+        }
+
         $text = "";
         if ($node->childNodes) {
             foreach ($node->childNodes as $child) {
@@ -74,7 +89,7 @@ class SimpleHtmlTextExtractor implements HtmlTextExtractorInterface
             'li', 'br', 'hr', 'article', 'section'
         ];
 
-        if (in_array(strtolower($node->nodeName), $blockElements)) {
+        if (in_array($nodeName, $blockElements)) {
             $text .= "\n";
         }
 

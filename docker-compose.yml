@@ -41,7 +41,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME:-datacrawl}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-datacrawl_secret}
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "127.0.0.1:${DB_PORT:-5432}:5432"
     volumes:
       - datacrawl_postgres_data:/var/lib/postgresql/data
     networks:
@@ -62,6 +62,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
+      - .:/var/www
       - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
@@ -80,7 +81,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
     ports:
-      - "9000:9000"
+      - "127.0.0.1:9000:9000"
     networks:
       - datacrawl
 

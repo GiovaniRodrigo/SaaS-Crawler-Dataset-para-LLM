@@ -33,9 +33,15 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'organization' => $request->user() ? [
+                    'subscription_plan' => $request->user()->currentOrganization()?->subscription_plan
+                ] : null,
+                'notifications' => $request->user() ? $request->user()->unreadNotifications()->take(5)->get() : [],
             ],
             'flash' => [
                 'message' => $request->session()->get('message'),
+                'success' => $request->session()->get('success'),
+                'error' => $request->session()->get('error'),
                 'semanticSearchResults' => $request->session()->get('semanticSearchResults'),
             ],
             'locale' => app()->getLocale(),

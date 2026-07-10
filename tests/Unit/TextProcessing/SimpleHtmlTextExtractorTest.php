@@ -36,4 +36,24 @@ class SimpleHtmlTextExtractorTest extends TestCase
         $this->assertStringNotContainsString('Footer noise', $result->text);
         $this->assertStringNotContainsString("alert('noise')", $result->text);
     }
+
+    public function test_it_preserves_code_blocks()
+    {
+        $extractor = new SimpleHtmlTextExtractor();
+        $html = <<<HTML
+        <main>
+            <h1>Routing</h1>
+            <p>Example:</p>
+            <pre>Route::get('/', function () { return view('welcome'); });</pre>
+            <p>Inline <code>code</code> here.</p>
+        </main>
+        HTML;
+
+        $result = $extractor->extract($html);
+
+        $this->assertStringContainsString('Routing', $result->text);
+        $this->assertStringContainsString('```', $result->text);
+        $this->assertStringContainsString("Route::get('/', function () { return view('welcome'); });", $result->text);
+        $this->assertStringContainsString('`code`', $result->text);
+    }
 }

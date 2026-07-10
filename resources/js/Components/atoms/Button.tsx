@@ -19,17 +19,17 @@ export default function Button({
     ...props
 }: ButtonProps) {
     const variants = {
-        primary: 'bg-primary-500 text-slate-950 hover:bg-primary-400 shadow-lg shadow-primary-500/20 font-bold',
-        secondary: 'bg-slate-800 border border-slate-700 text-slate-100 hover:bg-slate-700',
-        destructive: 'bg-rose-500 text-white hover:bg-rose-600 shadow-sm shadow-rose-500/20',
-        ghost: 'bg-transparent text-slate-400 hover:bg-slate-800 hover:text-slate-100',
-        outline: 'bg-transparent border border-primary-500/50 text-primary-400 hover:bg-primary-500/10',
+        primary: 'bg-cyan-400 text-black hover:bg-cyan-300 shadow-lg shadow-cyan-500/20 font-black',
+        secondary: 'bg-white dark:bg-slate-900 border-2 border-slate-950 dark:border-slate-50 text-slate-950 dark:text-slate-50 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold',
+        destructive: 'bg-red-600 text-white hover:bg-red-700 shadow-sm shadow-red-500/20 font-bold',
+        ghost: 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-950 dark:hover:text-slate-50 font-bold',
+        outline: 'bg-transparent border-2 border-cyan-500 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-500/10 font-bold',
     };
 
     const sizes = {
         sm: 'h-8 px-3 text-xs',
-        md: 'h-10 px-4 text-sm font-medium',
-        lg: 'h-12 px-6 text-base font-semibold',
+        md: 'h-10 px-4 text-sm font-bold',
+        lg: 'h-12 px-6 text-base font-black',
         icon: 'h-10 w-10 flex items-center justify-center p-0',
     };
 
@@ -37,7 +37,9 @@ export default function Button({
         <button
             disabled={isLoading || disabled}
             className={cn(
-                'inline-flex items-center justify-center gap-2 rounded-xl transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-950',
+                'inline-flex items-center justify-center gap-2 rounded-xl transition-all duration-200 active:scale-95 disabled:pointer-events-none focus:outline-none focus:ring-4 focus:ring-cyan-500/50 dark:focus:ring-cyan-400/30',
+                variant === 'primary' && 'disabled:bg-slate-200 dark:disabled:bg-slate-800 disabled:text-slate-500 disabled:shadow-none',
+                variant !== 'primary' && 'disabled:opacity-50 disabled:shadow-none',
                 variants[variant],
                 sizes[size],
                 className

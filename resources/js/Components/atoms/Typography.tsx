@@ -17,15 +17,15 @@ export default function Typography({
     as,
 }: TypographyProps) {
     const variants = {
-        display: 'font-display text-5xl font-black tracking-tighter',
-        h1: 'font-display text-3xl font-bold tracking-tight',
-        h2: 'font-display text-2xl font-bold tracking-tight',
-        h3: 'font-display text-xl font-semibold tracking-tight',
-        h4: 'font-display text-lg font-semibold tracking-tight',
-        body: 'text-base leading-relaxed',
-        small: 'text-sm leading-relaxed',
-        caption: 'text-xs font-medium uppercase tracking-wider',
-        code: 'font-mono text-sm font-medium',
+        display: 'font-display text-5xl font-black tracking-tighter text-foreground',
+        h1: 'font-display text-3xl font-bold tracking-tight text-foreground',
+        h2: 'font-display text-2xl font-bold tracking-tight text-foreground',
+        h3: 'font-display text-xl font-semibold tracking-tight text-foreground',
+        h4: 'font-display text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100',
+        body: 'text-base leading-relaxed text-slate-900 dark:text-slate-100',
+        small: 'text-sm leading-relaxed text-slate-800 dark:text-slate-200',
+        caption: 'text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400',
+        code: 'font-mono text-sm font-bold text-foreground bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-1.5 py-0.5 rounded',
     };
 
     const Component = as || (

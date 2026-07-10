@@ -57,8 +57,8 @@ export default function JobProgressCard({ jobs }: JobProgressCardProps) {
                     <Typography variant="body" className="text-slate-500">Nenhum job em execução</Typography>
                 </div>
             )}
-            <div className="bg-slate-800/50 p-4 text-center border-t border-slate-800">
-                <Link href="#" className="text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors">
+            <div className="bg-slate-100 dark:bg-slate-800/50 p-4 text-center border-t border-slate-200 dark:border-slate-800">
+                <Link href={route('crawl-jobs.indexAll')} className="text-sm font-bold text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 transition-colors uppercase tracking-wider">
                     Ver todos os jobs
                 </Link>
             </div>

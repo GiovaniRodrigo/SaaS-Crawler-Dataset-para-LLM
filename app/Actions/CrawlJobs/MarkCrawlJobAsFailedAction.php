@@ -3,6 +3,7 @@
 namespace App\Actions\CrawlJobs;
 
 use App\Models\CrawlJob;
+use App\Notifications\JobCompletedNotification;
 
 class MarkCrawlJobAsFailedAction
 {
@@ -12,5 +13,7 @@ class MarkCrawlJobAsFailedAction
             'status' => 'failed',
             'finished_at' => now(),
         ]);
+
+        $job->project->user->notify(new JobCompletedNotification($job));
     }
 }

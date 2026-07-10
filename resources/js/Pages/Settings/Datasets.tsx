@@ -336,7 +336,8 @@ export default function Datasets({ projects, exports }: Props) {
                                             <td className="py-4 px-4 text-right">
                                                 <a 
                                                     href={route('settings.datasets.download', item.id)}
-                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-xs font-bold transition-all animate-pulse-slow"
+                                                    download
+                                                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 text-xs font-bold transition-all"
                                                 >
                                                     <Download className="h-3.5 w-3.5" />
                                                     <span>Download</span>

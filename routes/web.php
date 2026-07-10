@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings/billing/subscribe', [StripeBillingController::class, 'subscribe'])->name('settings.billing.subscribe');
     Route::post('/settings/billing/portal', [StripeBillingController::class, 'portal'])->name('settings.billing.portal');
     Route::get('/settings', [SettingsController::class, 'general'])->name('settings.general');
+    Route::post('/settings', [SettingsController::class, 'updateGeneral'])->name('settings.general.update');
     Route::get('/settings/tokens', [ApiTokenController::class, 'index'])->name('settings.tokens');
     Route::post('/settings/tokens', [ApiTokenController::class, 'store'])->name('settings.tokens.store');
     Route::delete('/settings/tokens/{id}', [ApiTokenController::class, 'destroy'])->name('settings.tokens.destroy');
@@ -82,6 +83,9 @@ Route::middleware('auth')->group(function () {
     // Crawl Jobs
     Route::get('projects/{project}/crawl-jobs/create', [CrawlJobController::class, 'create'])->name('projects.crawl-jobs.create');
     Route::post('projects/{project}/crawl-jobs', [CrawlJobController::class, 'store'])->name('projects.crawl-jobs.store');
+    Route::get('crawl-jobs/{crawlJob}/failures', [CrawlJobController::class, 'failures'])->name('crawl-jobs.failures');
+    Route::get('crawl-jobs/{crawlJob}/crawled', [CrawlJobController::class, 'crawledPages'])->name('crawl-jobs.crawled');
+    Route::get('crawl-jobs/{crawlJob}/discovered', [CrawlJobController::class, 'discoveredPages'])->name('crawl-jobs.discovered');
     Route::get('crawl-jobs/{crawlJob}', [CrawlJobController::class, 'show'])->name('crawl-jobs.show');
     Route::post('crawl-jobs/{crawlJob}/run', [CrawlJobController::class, 'run'])->name('crawl-jobs.run');
 

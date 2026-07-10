@@ -106,7 +106,7 @@ Regra importante no projeto de referencia: **usar `app/globals.css` como fonte p
 | Evitar CSS duplicado | Preferir tokens CSS e utilitarios existentes |
 | Baixo custo | Implementar primeiro telas estaticas e dados mockados, depois integrar com backend |
 | Responsividade | Usar grids responsivos com `grid-cols-1`, `md:grid-cols-*`, `lg:grid-cols-*` |
-| Acessibilidade | Preservar foco visivel, labels, contraste e componentes acessiveis |
+| Acessibilidade | Preservar foco visivel, labels, contraste e componentes acessiveis. **Garantir sempre alto contraste entre fontes e fundo, evitando tons parecidos (ex: cinza escuro sobre fundo preto).** |
 | Idioma | Textos de interface em portugues do Brasil |
 | Dominio | Usar vocabulario de crawling, datasets, chunks, exportacoes, LLM, RAG e processamento |
 

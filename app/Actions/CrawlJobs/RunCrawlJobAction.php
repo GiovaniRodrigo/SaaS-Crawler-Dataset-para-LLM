@@ -44,6 +44,18 @@ class RunCrawlJobAction
                 $normalized = $this->urlNormalizer->normalize($url);
                 if ($this->scopeValidator->isAllowed($normalized, $job->project, $job, 0)) {
                     $this->queue[] = ['url' => $normalized, 'depth' => 0];
+                } else {
+                    Log::warning("Seed URL {$url} bloqueada pelo validador de escopo para o projeto {$job->project_id}.");
+                    CrawledPage::create([
+                        'project_id' => $job->project_id,
+                        'crawl_job_id' => $job->id,
+                        'url' => $normalized,
+                        'domain' => parse_url($normalized, PHP_URL_HOST),
+                        'status_code' => 0,
+                        'source' => 'crawler',
+                        'error_message' => 'URL inicial fora do escopo autorizado do projeto. Adicione o domínio na aba de configurações.',
+                    ]);
+                    $job->increment('total_failed');
                 }
             }
 
